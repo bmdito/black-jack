@@ -3,7 +3,14 @@ function theGame() {
   var currentShuffle = [];
   var dealtCards = [];
   var dealerHand = [];
+  var currentDealerPoints = 0;
+  var dealerAceCount = 0;
   var playerHand = [];
+  var currentPlayerPoints = 0;
+  var playerAceCount = 0;
+  var playerTurn = true;
+  var playerStay = false;
+  var dealerStay = false;
 
   function makeDeck() {
     // console.log(new person("john", "doe", "blue", 50));
@@ -37,7 +44,7 @@ function theGame() {
         theDeck.push(new card(suits[j], values[i]));
       }
     }
-    // console.log(theDeck);
+    console.log("...generating deck");
   }
 
   function shuffle() {
@@ -55,12 +62,208 @@ function theGame() {
     currentShuffle = shuffled;
   }
 
+  function flopLoss() {
+    console.log("OUCH dealer dealt 21");
+  }
+
+  function busted() {
+    console.log("BUSTED, the dealer won!");
+  }
+
+  function youLose() {
+    console.log("You lost!");
+  }
+
+  function tablePush() {
+    console.log("You pushed!");
+  }
+
+  function youWin() {
+    console.log("You won the hand!");
+    //add chips to stack,
+    //reset all values (can use a general function that resets all)
+  }
+
+  //dealer functions
+
+  function dealerHit() {
+    console.log("the dealer hit!");
+    dealerHand.push(currentShuffle[0]);
+    console.log(dealerHand);
+    currentShuffle = currentShuffle.slice(1);
+    scoreCheck();
+    if (dealerStay === false) {
+      dealerTurn();
+    }
+  }
+
+  function dealerStayed() {
+    console.log("the dealer stayed!");
+    dealerStay = true;
+    scoreCheck();
+  }
+  function dealerTurn() {
+    console.log("dealer turn");
+    if (currentDealerPoints < 17) {
+      dealerHit();
+      //soft 17
+    } else if (currentDealerPoints === 17 && dealerAceCount > 0) {
+      dealerHit();
+    } else if (currentDealerPoints > 17) {
+      dealerStayed();
+    }
+  }
+
+  //   function dealerHit() {
+  //     console.log("the dealer hit!");
+  //     dealerHand.push(currentShuffle[0]);
+  //     console.log(dealerHand);
+  //     currentShuffle = currentShuffle.slice(1);
+  //     scoreCheck();
+  //     dealerTurn();
+  //   }
+
+  //   function dealerStay() {
+  //     console.log("the dealer stayed!");
+  //     dealerStay = true;
+  //     scoreCheck();
+  //   }
+
+  //players turns
+  function playerHit() {
+    // must be tied to button HIT
+    console.log("the player hit!");
+    playerHand.push(currentShuffle[0]);
+    currentShuffle = currentShuffle.slice(1);
+    scoreCheck();
+  }
+
+  function playerClickedStay() {
+    console.log("player clicked stay");
+    playerStay = true;
+    dealerTurn();
+  }
+
+  function roundOver() {
+    console.log("round over!");
+    if (currentPlayerPoints > 21) {
+      youLose();
+    } else if (
+      currentDealerPoints > currentPlayerPoints &&
+      currentDealerPoints < 22
+    ) {
+      youLose();
+    } else if (
+      currentDealerPoints < currentPlayerPoints &&
+      currentPlayerPoints < 22
+    ) {
+      youWin();
+    } else if (
+      currentDealerPoints > currentPlayerPoints &&
+      currentDealerPoints > 21
+    ) {
+      youWin();
+    } else if (currentDealerPoints === currentPlayerPoints) {
+      tablePush();
+    }
+  }
+
+  function scoreCheck() {
+    newDealerPoints = 0;
+    newPlayerPoints = 0;
+    for (var i = 0; i < dealerHand.length; i++) {
+      if (
+        dealerHand[i].val === "J" ||
+        dealerHand[i].val === "Q" ||
+        dealerHand[i].val === "K"
+      ) {
+        newDealerPoints += 10;
+      } else if (dealerHand[i].val === "A") {
+        newDealerPoints += 11;
+        dealerAceCount++;
+      } else {
+        newDealerPoints += parseInt(dealerHand[i].val);
+      }
+    }
+
+    for (var i = 0; i < playerHand.length; i++) {
+      if (
+        playerHand[i].val === "J" ||
+        playerHand[i].val === "Q" ||
+        playerHand[i].val === "K"
+      ) {
+        newPlayerPoints += 10;
+      } else if (playerHand[i].val === "A") {
+        newPlayerPoints += 11;
+        playerAceCount++;
+      } else {
+        newPlayerPoints += parseInt(playerHand[i].val);
+      }
+    }
+    currentDealerPoints = newDealerPoints;
+    currentPlayerPoints = newPlayerPoints;
+    console.log("current player score SCORECHECK: " + currentPlayerPoints);
+    console.log("current dealer score SCORECHECK: " + currentDealerPoints);
+
+    if (currentPlayerPoints > 21 && playerAceCount === 0) {
+      playerStay = true;
+    }
+
+    if (currentDealerPoints > 21 && dealerAceCount === 0) {
+      dealerStay = true;
+    }
+
+    if (dealerStay === true && playerStay === true) {
+      console.log("dealer and player both stayed");
+      roundOver();
+    }
+    // initial deal edge cases
+    if (
+      currentDealerPoints === 21 &&
+      currentPlayerPoints < 21 &&
+      dealerHand.length === 2
+    ) {
+      flopLoss();
+    }
+
+    if (currentDealerPoints === 21 && currentPlayerPoints === 21) {
+      tablePush();
+    }
+    //NEED TO FIX HOW TO DEAL WITH MULTPLE ACES
+
+    // need to check if dealer/player points > 21 and acecount > 0,  subtract 10*aceCount from points.
+    if (
+      currentDealerPoints > 21 &&
+      dealerAceCount === 2 &&
+      dealerHand.length === 2
+    ) {
+      currentDealerPoints -= 10;
+    }
+
+    if (
+      currentPlayerPoints > 21 &&
+      playerAceCount === 2 &&
+      playerHand.length === 2
+    ) {
+      currentPlayerPoints -= 10;
+    }
+
+    if (currentPlayerPoints > 21 && playerAceCount === 1) {
+      currentPlayerPoints -= 10;
+    }
+    if (currentDealerPoints > 21 && dealerAceCount === 1) {
+      currentDealerPoints -= 10;
+    }
+
+    // if dealer has 16 hit, 17 stay, soft 17 hit
+
+    if (!playerStay) {
+      playerClickedStay();
+    }
+  }
+
   function deal() {
-    // var theCard = currentShuffle[0];
-    // dealtCards.push(theCard);
-    // currentShuffle.shift();
-    // console.log(theCard);
-    // console.log(dealtCards);
+    console.log("... dealing cards");
     playerHand.push(currentShuffle[0], currentShuffle[2]);
     dealerHand.push(currentShuffle[1], currentShuffle[3]);
     console.log("player: ");
@@ -69,6 +272,8 @@ function theGame() {
     console.log(dealerHand[0], dealerHand[1]);
     currentShuffle = currentShuffle.slice(4);
     console.log(currentShuffle);
+    console.log("checking for 21");
+    scoreCheck();
   }
 
   console.log("game started");
@@ -85,3 +290,4 @@ function theGame() {
 }
 
 theGame();
+playerClickedStay();
