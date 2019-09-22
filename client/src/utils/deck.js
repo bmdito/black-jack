@@ -3,9 +3,11 @@ function theGame() {
   var currentShuffle = [];
   var dealtCards = [];
   var dealerHand = [];
+  var dealerSpecialHand = [];
   var currentDealerPoints = 0;
 
   var playerHand = [];
+  var playerSpecialHand = [];
   var currentPlayerPoints = 0;
 
   //my incorporate player turn for variable players
@@ -109,6 +111,16 @@ function theGame() {
     } else if (currentDealerPoints >= 17) {
       dealerStayed();
     }
+  }
+
+  //double downs
+  function doubleDown() {
+    // if player clicks double down
+    // current bet doubles
+    //gets one more card then automatic stay
+    playerHand.push(currentShuffle[0]);
+    currentShuffle = currentShuffle.slice(1);
+    playerClickedStay();
   }
 
   //players turns
