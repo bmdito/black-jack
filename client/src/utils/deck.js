@@ -4,19 +4,16 @@ function theGame() {
   var dealtCards = [];
   var dealerHand = [];
   var currentDealerPoints = 0;
-  var dealerAceCount = 0;
+
   var playerHand = [];
   var currentPlayerPoints = 0;
-  var playerAceCount = 0;
-  var playerTurn = true;
+
+  //my incorporate player turn for variable players
+  //   var playerTurn = true;
   var playerStay = false;
   var dealerStay = false;
 
   function makeDeck() {
-    // console.log(new person("john", "doe", "blue", 50));
-    // const theDeck = [];
-    // var currentShuffle;
-    // var dealtCards = [];
     function card(suit, val) {
       this.name = `${val} of ${suit}`;
       (this.suit = suit), (this.val = val);
@@ -109,25 +106,10 @@ function theGame() {
       //soft 17
     } else if (currentDealerPoints === 17 && dealerAceCount > 0) {
       dealerHit();
-    } else if (currentDealerPoints > 17) {
+    } else if (currentDealerPoints >= 17) {
       dealerStayed();
     }
   }
-
-  //   function dealerHit() {
-  //     console.log("the dealer hit!");
-  //     dealerHand.push(currentShuffle[0]);
-  //     console.log(dealerHand);
-  //     currentShuffle = currentShuffle.slice(1);
-  //     scoreCheck();
-  //     dealerTurn();
-  //   }
-
-  //   function dealerStay() {
-  //     console.log("the dealer stayed!");
-  //     dealerStay = true;
-  //     scoreCheck();
-  //   }
 
   //players turns
   function playerHit() {
@@ -169,8 +151,11 @@ function theGame() {
   }
 
   function scoreCheck() {
-    newDealerPoints = 0;
-    newPlayerPoints = 0;
+    var newDealerPoints = 0;
+    var newPlayerPoints = 0;
+    var newDealerAceCount = 0;
+    var newPlayerAceCount = 0;
+
     for (var i = 0; i < dealerHand.length; i++) {
       if (
         dealerHand[i].val === "J" ||
@@ -180,7 +165,7 @@ function theGame() {
         newDealerPoints += 10;
       } else if (dealerHand[i].val === "A") {
         newDealerPoints += 11;
-        dealerAceCount++;
+        newDealerAceCount++;
       } else {
         newDealerPoints += parseInt(dealerHand[i].val);
       }
@@ -195,13 +180,31 @@ function theGame() {
         newPlayerPoints += 10;
       } else if (playerHand[i].val === "A") {
         newPlayerPoints += 11;
-        playerAceCount++;
+        newPlayerAceCount++;
       } else {
         newPlayerPoints += parseInt(playerHand[i].val);
       }
     }
+
+    //check for ace value adjustment
+    if (newDealerPoints > 21 && newDealerAceCount > 0) {
+      while (newDealerAceCount > 0 && newDealerPoints > 21) {
+        newDealerPoints -= 10;
+        newDealerAceCount--;
+      }
+    }
+
+    if (newPlayerPoints > 21 && newPlayerAceCount > 0) {
+      while (newPlayerAceCount > 0 && newPlayerPoints > 21) {
+        newPlayerPoints -= 10;
+        newnewPlayerAceCount--;
+      }
+    }
+
     currentDealerPoints = newDealerPoints;
     currentPlayerPoints = newPlayerPoints;
+    playerAceCount = newPlayerAceCount;
+    dealerAceCount = newDealerAceCount;
     console.log("current player score SCORECHECK: " + currentPlayerPoints);
     console.log("current dealer score SCORECHECK: " + currentDealerPoints);
 
@@ -229,33 +232,6 @@ function theGame() {
     if (currentDealerPoints === 21 && currentPlayerPoints === 21) {
       tablePush();
     }
-    //NEED TO FIX HOW TO DEAL WITH MULTPLE ACES
-
-    // need to check if dealer/player points > 21 and acecount > 0,  subtract 10*aceCount from points.
-    if (
-      currentDealerPoints > 21 &&
-      dealerAceCount === 2 &&
-      dealerHand.length === 2
-    ) {
-      currentDealerPoints -= 10;
-    }
-
-    if (
-      currentPlayerPoints > 21 &&
-      playerAceCount === 2 &&
-      playerHand.length === 2
-    ) {
-      currentPlayerPoints -= 10;
-    }
-
-    if (currentPlayerPoints > 21 && playerAceCount === 1) {
-      currentPlayerPoints -= 10;
-    }
-    if (currentDealerPoints > 21 && dealerAceCount === 1) {
-      currentDealerPoints -= 10;
-    }
-
-    // if dealer has 16 hit, 17 stay, soft 17 hit
 
     if (!playerStay) {
       playerClickedStay();
@@ -290,4 +266,3 @@ function theGame() {
 }
 
 theGame();
-playerClickedStay();
