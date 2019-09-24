@@ -9,6 +9,7 @@ function theGame() {
   var playerHand = [];
   var playerSpecialHand = [];
   var currentPlayerPoints = 0;
+  var currentPlayerBet = 0;
 
   //my incorporate player turn for variable players
   //   var playerTurn = true;
@@ -112,6 +113,13 @@ function theGame() {
       dealerStayed();
     }
   }
+
+  //Split
+  //if player clicks split, card gets popped to second hand, toggle button available
+  //first hand count /2
+  // need another spot for had to go to, player hand 2
+
+  function split() {}
 
   //double downs
   function doubleDown() {
