@@ -10,6 +10,7 @@ function theGame() {
   var playerSpecialHand = [];
   var currentPlayerPoints = 0;
   var currentPlayerBet = 0;
+  var test = '';
 
   //my incorporate player turn for variable players
   //   var playerTurn = true;
