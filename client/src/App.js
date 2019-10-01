@@ -1,25 +1,16 @@
 import React from "react";
-import makeDeck from "./utils/deck";
+import Table from "./components/Table";
+import { Button } from "react-bootstrap";
+// import makeDeck from "./utils/deck";
 
 import "./App.css";
 
 function App() {
-  makeDeck();
+  // makeDeck();
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Table />
+      {/* <Button bsStyle="success">Test</Button> */}
     </div>
   );
 }

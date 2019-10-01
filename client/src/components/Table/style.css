@@ -1,0 +1,60 @@
+body {
+  background-color: blue;
+}
+
+.table-visual {
+  background-color: rgb(48, 83, 76);
+  height: 600px;
+  width: 700px;
+  border-radius: 100%;
+  margin-top: 40px;
+  width: 100%;
+  position: relative;
+}
+
+.dealerPos {
+  background-color: pink;
+  position: absolute;
+  left: 28%;
+  top: 20px;
+  width: 400px;
+  height: 150px;
+}
+
+.posOne {
+  background-color: green;
+  position: absolute;
+  left: 6%;
+  bottom: 46px;
+  width: 400px;
+  height: 150px;
+}
+
+.posTwo {
+  background-color: yellow;
+  position: absolute;
+  right: 6%;
+  bottom: 46px;
+  width: 400px;
+  height: 150px;
+}
+
+.betDiv {
+  border-radius: 100%;
+  height: 45px;
+  width: 45px;
+}
+
+.betOne {
+  background-color: Red;
+  position: absolute;
+  top: -41%;
+  left: 45%;
+}
+
+.betTwo {
+  background-color: Black;
+  position: absolute;
+  top: -41%;
+  right: 45%;
+}
