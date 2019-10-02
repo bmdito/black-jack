@@ -10,7 +10,6 @@ function App() {
   return (
     <div className="App">
       <Table />
-      {/* <Button bsStyle="success">Test</Button> */}
     </div>
   );
 }

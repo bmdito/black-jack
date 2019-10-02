@@ -4,8 +4,8 @@ body {
 
 .table-visual {
   background-color: rgb(48, 83, 76);
-  height: 600px;
-  width: 700px;
+  height: 650px;
+  /* width: 700px; */
   border-radius: 100%;
   margin-top: 40px;
   width: 100%;
@@ -25,18 +25,18 @@ body {
   background-color: green;
   position: absolute;
   left: 6%;
-  bottom: 46px;
+  bottom: 120px;
   width: 400px;
-  height: 150px;
+  height: 160px;
 }
 
 .posTwo {
   background-color: yellow;
   position: absolute;
   right: 6%;
-  bottom: 46px;
+  bottom: 120px;
   width: 400px;
-  height: 150px;
+  height: 160px;
 }
 
 .betDiv {
@@ -48,13 +48,21 @@ body {
 .betOne {
   background-color: Red;
   position: absolute;
-  top: -41%;
-  left: 45%;
+  top: -71%;
+  left: 65%;
 }
 
 .betTwo {
   background-color: Black;
   position: absolute;
-  top: -41%;
-  right: 45%;
+  top: -71%;
+  right: 65%;
+}
+
+.card {
+  position: absolute;
+  border: 2px solid black;
+  width: 80px;
+  height: 122px;
+  float: left;
 }

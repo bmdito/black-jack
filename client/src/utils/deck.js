@@ -1,4 +1,4 @@
-function theGame() {
+export const theGame = () => {
   var theDeck = [];
   var currentShuffle = [];
   var dealtCards = [];
@@ -10,7 +10,7 @@ function theGame() {
   var playerSpecialHand = [];
   var currentPlayerPoints = 0;
   var currentPlayerBet = 0;
-  var test = '';
+  var test = "";
 
   //my incorporate player turn for variable players
   //   var playerTurn = true;
@@ -218,7 +218,7 @@ function theGame() {
     if (newPlayerPoints > 21 && newPlayerAceCount > 0) {
       while (newPlayerAceCount > 0 && newPlayerPoints > 21) {
         newPlayerPoints -= 10;
-        newnewPlayerAceCount--;
+        newPlayerAceCount--;
       }
     }
 
@@ -284,6 +284,4 @@ function theGame() {
   }
 
   deal();
-}
-
-theGame();
+};
