@@ -13,7 +13,8 @@ class Table extends Component {
     betInPlay: null,
     hideBetDiv: false,
     showSplit: false,
-    firstDeal: true
+    firstDeal: true,
+    dealerTurn: false
   };
 
   componentDidMount() {
@@ -121,7 +122,10 @@ class Table extends Component {
       currentShuffle: updated
     });
 
-    this.scoreCheck();
+    setTimeout(() => {
+      this.scoreCheck();
+    }, 1000);
+
     this.hitOption();
   };
 
@@ -130,13 +134,53 @@ class Table extends Component {
       this.setState({
         firstDeal: false
       });
-    }, 3000);
+    }, 2000);
   };
 
   //checkScore
   scoreCheck = () => {
     alert("you clicked score check");
     this.splitCheck();
+    let sampDealerHand = [...this.state.dealerHand];
+    console.log(sampDealerHand);
+    let sampPlayerHand = [...this.state.playerHand];
+    let currentDealer = 0;
+    var currentPlayer = 0;
+    var newDealerAceCount = 0;
+    var newPlayerAceCount = 0;
+
+    for (var i = 0; i < sampDealerHand.length; i++) {
+      if (
+        sampDealerHand[i].val === "J" ||
+        sampDealerHand[i].val === "Q" ||
+        sampDealerHand[i].val === "K"
+      ) {
+        currentDealer += 10;
+      } else if (sampDealerHand[i].val === "A") {
+        currentDealer += 11;
+        newDealerAceCount++;
+      } else {
+        currentDealer += parseInt(sampDealerHand[i].val);
+      }
+    }
+
+    console.log("current dealer score:" + currentDealer);
+
+    for (var i = 0; i < sampPlayerHand.length; i++) {
+      if (
+        sampPlayerHand[i].val === "J" ||
+        sampPlayerHand[i].val === "Q" ||
+        sampPlayerHand[i].val === "K"
+      ) {
+        currentPlayer += 10;
+      } else if (sampPlayerHand[i].val === "A") {
+        currentPlayer += 11;
+        newPlayerAceCount++;
+      } else {
+        currentPlayer += parseInt(sampPlayerHand[i].val);
+      }
+    }
+    console.log("current player score:" + currentPlayer);
   };
 
   //Check to see if there is an option to split
@@ -150,10 +194,26 @@ class Table extends Component {
   // draw a card
   playerHit = () => {
     console.log("player hit!");
+    let current = [...this.state.playerHand, this.state.currentShuffle[0]];
+    let adjusted = [...this.state.currentShuffle].slice(1);
+
+    this.setState({
+      playerHand: current,
+      currentShuffle: adjusted
+    });
+
+    setTimeout(() => {
+      this.scoreCheck();
+    }, 1000);
+  };
+
+  dealerTurn = () => {
+    console.log("its the dealers turn");
   };
 
   playerStand = () => {
     console.log("player Stood!");
+    this.dealerTurn();
   };
 
   playerDouble = () => {

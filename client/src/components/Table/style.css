@@ -23,6 +23,7 @@ body {
 
 .posOne {
   background-color: green;
+
   position: absolute;
   left: 6%;
   bottom: 120px;
@@ -90,6 +91,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 25px;
+  margin-right: 2px;
 }
 
 .card-red {
