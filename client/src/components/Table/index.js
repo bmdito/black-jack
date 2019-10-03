@@ -13,6 +13,7 @@ class Table extends Component {
     betInPlay: null,
     hideBetDiv: false,
     showSplit: false,
+    splitSelected: false,
     firstDeal: true,
     dealerTurn: false
   };
@@ -146,8 +147,8 @@ class Table extends Component {
     let sampPlayerHand = [...this.state.playerHand];
     let currentDealer = 0;
     var currentPlayer = 0;
-    var newDealerAceCount = 0;
-    var newPlayerAceCount = 0;
+    var dealerAceCount = 0;
+    var playerAceCount = 0;
 
     for (var i = 0; i < sampDealerHand.length; i++) {
       if (
@@ -158,13 +159,11 @@ class Table extends Component {
         currentDealer += 10;
       } else if (sampDealerHand[i].val === "A") {
         currentDealer += 11;
-        newDealerAceCount++;
+        dealerAceCount++;
       } else {
         currentDealer += parseInt(sampDealerHand[i].val);
       }
     }
-
-    console.log("current dealer score:" + currentDealer);
 
     for (var i = 0; i < sampPlayerHand.length; i++) {
       if (
@@ -175,12 +174,28 @@ class Table extends Component {
         currentPlayer += 10;
       } else if (sampPlayerHand[i].val === "A") {
         currentPlayer += 11;
-        newPlayerAceCount++;
+        playerAceCount++;
       } else {
         currentPlayer += parseInt(sampPlayerHand[i].val);
       }
     }
+
+    if (currentDealer > 21 && dealerAceCount > 0) {
+      while (dealerAceCount > 0 && currentDealer > 21) {
+        currentDealer -= 10;
+        dealerAceCount--;
+      }
+    }
+
+    if (currentPlayer > 21 && playerAceCount > 0) {
+      while (playerAceCount > 0 && currentPlayer > 21) {
+        currentPlayer -= 10;
+        playerAceCount--;
+      }
+    }
+
     console.log("current player score:" + currentPlayer);
+    console.log("current dealer score:" + currentDealer);
   };
 
   //Check to see if there is an option to split
@@ -218,11 +233,32 @@ class Table extends Component {
 
   playerDouble = () => {
     console.log("player Doubled!");
+    let doubled = this.state.currentBet * 2;
+    let adjusted = this.state.chipStack - this.state.betInPlay;
+    this.playerHit();
+    this.setState({
+      betInPlay: doubled,
+      chipStack: adjusted,
+      firstDeal: true
+    });
+    setTimeout(() => {
+      this.playerStand();
+    }, 1500);
+  };
+
+  playerSplit = () => {
+    console.log("Player Split");
+    this.setState({
+      splitSelected: true
+    });
   };
 
   render() {
     const betDivStyle = this.state.hideBetDiv ? { visibility: "hidden" } : {};
-    const splitDivStyle = this.state.showSplit ? {} : { visibility: "hidden" };
+    const splitButtStyle = this.state.showSplit ? {} : { visibility: "hidden" };
+    const splitDivStyle = this.state.splitSelected
+      ? {}
+      : { visibility: "hidden" };
     const hitButtonAvail = this.state.firstDeal ? { visibility: "hidden" } : {};
     return (
       <>
@@ -263,13 +299,21 @@ class Table extends Component {
                   >
                     Double
                   </Button>
+                  <Button
+                    style={splitButtStyle}
+                    bsclass="success"
+                    className="split-button"
+                    onClick={this.playerSplit}
+                  >
+                    Split
+                  </Button>
                   {this.state.playerHand.map((card, i) => {
                     return <Card key={i} val={card.val} suit={card.suit} />;
                   })}
                   <div className="betOne betDiv">betOne</div>
-                  <Button bsclass="success" onClick={() => this.placeBet()}>
+                  {/* <Button bsclass="success" onClick={() => this.placeBet()}>
                     Place Bet
-                  </Button>
+                  </Button> */}
                   <div id="bet-div" style={betDivStyle}>
                     <form>
                       <input
