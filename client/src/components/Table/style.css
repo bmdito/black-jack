@@ -30,6 +30,27 @@ body {
   height: 160px;
 }
 
+.hit-button {
+  position: absolute;
+  top: -50px;
+  left: 63px;
+  width: 90px;
+}
+
+.stand-button {
+  position: absolute;
+  top: -50px;
+  left: 170px;
+  width: 90px;
+}
+
+.double-button {
+  position: absolute;
+  top: -50px;
+  left: 309px;
+  width: 90px;
+}
+
 .posTwo {
   background-color: yellow;
   position: absolute;

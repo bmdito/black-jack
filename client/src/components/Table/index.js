@@ -11,7 +11,9 @@ class Table extends Component {
     currentBet: null,
     chipStack: 100,
     betInPlay: null,
-    hideBetDiv: false
+    hideBetDiv: false,
+    showSplit: false,
+    firstDeal: true
   };
 
   componentDidMount() {
@@ -85,7 +87,7 @@ class Table extends Component {
   }
 
   //creates randomly shuffled deck
-  shuffle() {
+  shuffle = () => {
     var sample = this.state.theDeck;
     var shuffled = [];
     while (shuffled.length < 52) {
@@ -100,7 +102,7 @@ class Table extends Component {
     this.setState({
       currentShuffle: shuffled
     });
-  }
+  };
 
   //Initial Deal
   deal = () => {
@@ -120,15 +122,48 @@ class Table extends Component {
     });
 
     this.scoreCheck();
+    this.hitOption();
+  };
+
+  hitOption = () => {
+    setTimeout(() => {
+      this.setState({
+        firstDeal: false
+      });
+    }, 3000);
   };
 
   //checkScore
   scoreCheck = () => {
     alert("you clicked score check");
+    this.splitCheck();
+  };
+
+  //Check to see if there is an option to split
+  splitCheck = () => {
+    // if playerhand[0] && playerhand[1] are the same, option to split Appears
+    // if chosen amount same as bet in play goes to split div
+    // slice occurs and moves card over
+    //Account for new player added <playerAdded bolean in state?>
+  };
+
+  // draw a card
+  playerHit = () => {
+    console.log("player hit!");
+  };
+
+  playerStand = () => {
+    console.log("player Stood!");
+  };
+
+  playerDouble = () => {
+    console.log("player Doubled!");
   };
 
   render() {
     const betDivStyle = this.state.hideBetDiv ? { visibility: "hidden" } : {};
+    const splitDivStyle = this.state.showSplit ? {} : { visibility: "hidden" };
+    const hitButtonAvail = this.state.firstDeal ? { visibility: "hidden" } : {};
     return (
       <>
         <div className="container container-fluid">
@@ -144,6 +179,30 @@ class Table extends Component {
                   </div>
                 </div>
                 <div className="posOne">
+                  <Button
+                    style={hitButtonAvail}
+                    bsclass="success"
+                    className="hit-button"
+                    onClick={this.playerHit}
+                  >
+                    Hit
+                  </Button>
+                  <Button
+                    style={hitButtonAvail}
+                    bsclass="success"
+                    className="stand-button"
+                    onClick={this.playerStand}
+                  >
+                    Stand
+                  </Button>
+                  <Button
+                    style={hitButtonAvail}
+                    bsclass="success"
+                    className="double-button"
+                    onClick={this.playerDouble}
+                  >
+                    Double
+                  </Button>
                   {this.state.playerHand.map((card, i) => {
                     return <Card key={i} val={card.val} suit={card.suit} />;
                   })}
@@ -162,14 +221,15 @@ class Table extends Component {
                         onChange={this.handleInputChange}
                         onSubmit={this.handleSubmit}
                       />
-                      <button onClick={this.handleSubmit}>Submit</button>
+                      <button onClick={this.handleSubmit}>BET</button>
                     </form>
                   </div>
-                  <Button bsclass="success" onClick={() => this.shuffle()}>
+                  {/* () => this.shuffle() */}
+                  <Button bsclass="success" onClick={this.shuffle}>
                     SIT
                   </Button>
                 </div>
-                <div className="posTwo">
+                <div className="posTwo" style={splitDivStyle}>
                   <div className="betTwo betDiv">betTwo</div>
                 </div>
               </div>
