@@ -8,12 +8,44 @@ class Table extends Component {
     theDeck: [],
     currentShuffle: [],
     dealerHand: [],
-    playerHand: []
+    playerHand: [],
+    currentBet: null,
+    chipStack: 100,
+    betInPlay: null,
+    hideBetDiv: false
   };
 
   componentDidMount() {
     this.makeDeck();
   }
+
+  handleInputChange = event => {
+    let value = event.target.value;
+    let name = event.target.name;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.state.chipStack - this.state.currentBet < 0) {
+      alert("You dont have enough chips!");
+    } else if (this.state.currentBet > this.state.maxBet) {
+      alert("Bet exceeds max bet!");
+    } else {
+      // DEAL INITIAL HANDS
+
+      let inPlay = this.state.currentBet;
+      let adjusted = this.state.chipStack - this.state.currentBet;
+      this.setState({
+        chipStack: adjusted,
+        betInPlay: inPlay,
+        hideBetDiv: true
+      });
+      this.deal();
+    }
+  };
 
   //creates a deck of cards
   makeDeck() {
@@ -39,7 +71,7 @@ class Table extends Component {
       "K",
       "A"
     ];
-    const suits = ["hearts", "clubs", "spades", "diamonds"];
+    const suits = ["♦", "♣", "♥", "♠"];
 
     for (var i = 0; i < values.length; i++) {
       for (var j = 0; j < suits.length; j++) {
@@ -70,7 +102,27 @@ class Table extends Component {
     });
   }
 
+  deal = () => {
+    console.log("you clicked deal!");
+    // console.log("... dealing cards");
+    //   var playerDealt = [];
+    //   var dealerDealt = [];
+    //   playerDealt.push()
+    // this.setState({
+
+    // })
+    // playerHand.push(currentShuffle[0], currentShuffle[2]);
+    // dealerHand.push(currentShuffle[1], currentShuffle[3]);
+    // console.log("player: ");
+    // console.log(playerHand[0], playerHand[1]);
+    // console.log("dealer :");
+    // console.log(dealerHand[0], dealerHand[1]);
+    // currentShuffle = currentShuffle.slice(4);
+    // console.log(currentShuffle);
+    // console.log("checking for 21");
+  };
   render() {
+    const betDivStyle = this.state.hideBetDiv ? { visibility: "hidden" } : {};
     return (
       <>
         <div className="container container-fluid">
@@ -94,8 +146,25 @@ class Table extends Component {
                   <div className="card">card</div>
                   <div className="card">card</div>
                   <div className="card">card</div>
+                  <Button bsclass="success" onClick={() => this.placeBet()}>
+                    Place Bet
+                  </Button>
+                  <div id="bet-div" style={betDivStyle}>
+                    <form>
+                      <input
+                        className="bet-input"
+                        type="text"
+                        name="currentBet"
+                        placeholder=""
+                        value={this.state.currentBet}
+                        onChange={this.handleInputChange}
+                        onSubmit={this.handleSubmit}
+                      />
+                      <button onClick={this.handleSubmit}>Submit</button>
+                    </form>
+                  </div>
                   <Button bsclass="success" onClick={() => this.shuffle()}>
-                    button
+                    Deal
                   </Button>
                 </div>
                 <div className="posTwo">
