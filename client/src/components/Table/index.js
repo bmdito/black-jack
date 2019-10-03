@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import container, { Button } from "react-bootstrap";
 import "./style.css";
-// import { theGame } from "../../utils/deck";
 
 class Table extends Component {
   state = {
@@ -85,6 +84,7 @@ class Table extends Component {
     });
   }
 
+  //creates randomly shuffled deck
   shuffle() {
     var sample = this.state.theDeck;
     var shuffled = [];
@@ -102,25 +102,31 @@ class Table extends Component {
     });
   }
 
+  //Initial Deal
   deal = () => {
     console.log("you clicked deal!");
-    // console.log("... dealing cards");
-    //   var playerDealt = [];
-    //   var dealerDealt = [];
-    //   playerDealt.push()
-    // this.setState({
+    console.log("... dealing cards");
+    var playerDealt = [];
+    var dealerDealt = [];
+    var cards = this.state.currentShuffle;
+    playerDealt.push(cards[0], cards[2]);
+    dealerDealt.push(cards[1], cards[3]);
+    var updated = cards.slice(4);
 
-    // })
-    // playerHand.push(currentShuffle[0], currentShuffle[2]);
-    // dealerHand.push(currentShuffle[1], currentShuffle[3]);
-    // console.log("player: ");
-    // console.log(playerHand[0], playerHand[1]);
-    // console.log("dealer :");
-    // console.log(dealerHand[0], dealerHand[1]);
-    // currentShuffle = currentShuffle.slice(4);
-    // console.log(currentShuffle);
-    // console.log("checking for 21");
+    this.setState({
+      playerHand: playerDealt,
+      dealerHand: dealerDealt,
+      currentShuffle: updated
+    });
+
+    this.scoreCheck();
   };
+
+  //checkScore
+  scoreCheck = () => {
+    alert("you clicked score check");
+  };
+
   render() {
     const betDivStyle = this.state.hideBetDiv ? { visibility: "hidden" } : {};
     return (
@@ -131,21 +137,17 @@ class Table extends Component {
             <div className="col-md-10">
               <div className="table-visual">
                 <div className="dealerPos">
-                  <div className="card" id="cardA">
-                    card
+                  <div>
+                    {this.state.dealerHand.map((card, i) => {
+                      return <Card key={i} val={card.val} suit={card.suit} />;
+                    })}
                   </div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
                 </div>
                 <div className="posOne">
+                  {this.state.playerHand.map((card, i) => {
+                    return <Card key={i} val={card.val} suit={card.suit} />;
+                  })}
                   <div className="betOne betDiv">betOne</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
                   <Button bsclass="success" onClick={() => this.placeBet()}>
                     Place Bet
                   </Button>
@@ -164,16 +166,11 @@ class Table extends Component {
                     </form>
                   </div>
                   <Button bsclass="success" onClick={() => this.shuffle()}>
-                    Deal
+                    SIT
                   </Button>
                 </div>
                 <div className="posTwo">
                   <div className="betTwo betDiv">betTwo</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
-                  <div className="card">card</div>
                 </div>
               </div>
             </div>
@@ -184,5 +181,16 @@ class Table extends Component {
     );
   }
 }
+
+const Card = ({ val, suit }) => {
+  const combo = val ? `${val}${suit}` : null;
+  const color = suit === "♦" || suit === "♥" ? "card-red" : "card";
+
+  return (
+    <td>
+      <div className={color}>{combo}</div>
+    </td>
+  );
+};
 
 export default Table;

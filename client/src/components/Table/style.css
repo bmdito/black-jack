@@ -59,10 +59,18 @@ body {
   right: 65%;
 }
 
-.card {
-  position: absolute;
-  border: 2px solid black;
-  width: 80px;
+.card,
+.card-red {
   height: 122px;
-  float: left;
+  width: 80px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+.card-red {
+  color: red;
 }
