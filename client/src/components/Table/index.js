@@ -7,6 +7,8 @@ class Table extends Component {
     theDeck: [],
     currentShuffle: [],
     dealerHand: [],
+    dealerPoints: null,
+    playerPoints: null,
     playerHand: [],
     currentBet: null,
     chipStack: 100,
@@ -15,7 +17,8 @@ class Table extends Component {
     showSplit: false,
     splitSelected: false,
     firstDeal: true,
-    dealerTurn: false
+    dealerTurn: false,
+    dealerStand: false
   };
 
   componentDidMount() {
@@ -193,9 +196,21 @@ class Table extends Component {
         playerAceCount--;
       }
     }
+    // const d = this.dealerTurn(currentDealer);
 
     console.log("current player score:" + currentPlayer);
     console.log("current dealer score:" + currentDealer);
+    this.setState({
+      playerPoints: currentPlayer,
+      dealerPoints: currentDealer
+    });
+
+    if (this.state.dealerStand) {
+      const final = this.roundOver(
+        this.state.playerPoints,
+        this.state.dealerPoints
+      );
+    }
   };
 
   //Check to see if there is an option to split
@@ -222,15 +237,56 @@ class Table extends Component {
     }, 1000);
   };
 
+  dealerHit = () => {
+    console.log("dealer hit");
+    let current = [...this.state.dealerHand, this.state.currentShuffle[0]];
+    let adjusted = [...this.state.currentShuffle].slice(1);
+
+    this.setState({
+      dealerHand: current,
+      currentShuffle: adjusted
+    });
+
+    setTimeout(() => {
+      this.scoreCheck();
+    }, 1000);
+
+    setTimeout(() => {
+      this.dealerTurn();
+    }, 1500);
+  };
+
   dealerTurn = () => {
     console.log("its the dealers turn");
+    // console.log("variable d: " + d);
+    if (this.state.dealerPoints < 17) {
+      this.dealerHit();
+      //soft 17
+    } else if (this.state.dealerPoints >= 17) {
+      this.dealerStayed();
+    }
+    //  else if (this.state.dealerPoints === 17 && dealerAceCount > 0) {
+    //   this.dealerHit();
+    // }
+  };
+
+  dealerStayed = () => {
+    console.log("dealer stayed!");
+    this.setState({
+      dealerStand: true
+    });
+    this.scoreCheck();
   };
 
   playerStand = () => {
     console.log("player Stood!");
+    this.setState({
+      firstDeal: true
+    });
     this.dealerTurn();
   };
 
+  //Need to take away ability to double and ability to split after 3rd card
   playerDouble = () => {
     console.log("player Doubled!");
     let doubled = this.state.currentBet * 2;
@@ -251,6 +307,20 @@ class Table extends Component {
     this.setState({
       splitSelected: true
     });
+  };
+
+  roundOver = final => {
+    if (this.state.playerPoints > 21) {
+      alert("You Lost");
+    } else if (this.state.dealerPoints > 21 && this.state.playerPoints <= 21) {
+      alert("you win!");
+    } else if (this.state.dealerPoints > this.state.playerPoints) {
+      alert("you lost!");
+    } else if (this.state.playerPoints > this.state.dealerPoints) {
+      alert("you win");
+    } else if (this.state.playerPoints === this.state.dealerPoints) {
+      alert("PUSH");
+    }
   };
 
   render() {
