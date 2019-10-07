@@ -211,6 +211,10 @@ class Table extends Component {
         this.state.dealerPoints
       );
     }
+
+    if (this.state.playerPoints > 21) {
+      this.roundOver(this.state.playerPoints, this.state.dealerPoints);
+    }
   };
 
   //Check to see if there is an option to split
@@ -309,17 +313,67 @@ class Table extends Component {
     });
   };
 
+  playerWin = () => {
+    alert("player Win ran");
+    var updated = this.state.currentBet * 2 + this.state.chipStack;
+
+    this.setState({
+      chipStack: updated
+    });
+    this.resetGame();
+  };
+
+  playerLose = () => {
+    alert("player Lose ran");
+    this.resetGame();
+  };
+
+  playerPush = () => {
+    alert("player push ran");
+    var updated = this.state.currentBet + this.state.chipStack;
+    this.setState({
+      chipStack: updated
+    });
+    this.resetGame();
+  };
+
+  resetGame = () => {
+    if (this.state.currentShuffle.length < 10) {
+      this.shuffle();
+    } else {
+      this.setState({
+        dealerHand: [],
+        dealerPoints: null,
+        playerPoints: null,
+        playerHand: [],
+        currentBet: null,
+        betInPlay: null,
+        hideBetDiv: false,
+        showSplit: false,
+        splitSelected: false,
+        firstDeal: true,
+        dealerTurn: false,
+        dealerStand: false
+      });
+    }
+  };
+
   roundOver = final => {
     if (this.state.playerPoints > 21) {
       alert("You Lost");
+      this.playerLose();
     } else if (this.state.dealerPoints > 21 && this.state.playerPoints <= 21) {
       alert("you win!");
+      this.playerWin();
     } else if (this.state.dealerPoints > this.state.playerPoints) {
       alert("you lost!");
+      this.playerLose();
     } else if (this.state.playerPoints > this.state.dealerPoints) {
       alert("you win");
+      this.playerWin();
     } else if (this.state.playerPoints === this.state.dealerPoints) {
       alert("PUSH");
+      this.playerPush();
     }
   };
 
