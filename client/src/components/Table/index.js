@@ -13,12 +13,13 @@ class Table extends Component {
     currentBet: null,
     chipStack: 100,
     betInPlay: null,
-    hideBetDiv: false,
+    hideBetDiv: true,
     showSplit: false,
     splitSelected: false,
     firstDeal: true,
     dealerTurn: false,
-    dealerStand: false
+    dealerStand: false,
+    isSit: false
   };
 
   componentDidMount() {
@@ -105,7 +106,9 @@ class Table extends Component {
 
     console.log(shuffled);
     this.setState({
-      currentShuffle: shuffled
+      currentShuffle: shuffled,
+      hideBetDiv: false,
+      isSit: true
     });
   };
 
@@ -144,6 +147,7 @@ class Table extends Component {
   //checkScore
   scoreCheck = () => {
     alert("you clicked score check");
+
     this.splitCheck();
     let sampDealerHand = [...this.state.dealerHand];
     console.log(sampDealerHand);
@@ -205,11 +209,16 @@ class Table extends Component {
       dealerPoints: currentDealer
     });
 
+    if (this.state.dealerPoints === 21 && this.state.dealerHand.length === 2) {
+      this.playerLose();
+    }
+
     if (this.state.dealerStand) {
-      const final = this.roundOver(
-        this.state.playerPoints,
-        this.state.dealerPoints
-      );
+      // const final = this.roundOver(
+      //   this.state.playerPoints,
+      //   this.state.dealerPoints
+      // );
+      this.roundOver();
     }
 
     if (this.state.playerPoints > 21) {
@@ -219,6 +228,11 @@ class Table extends Component {
 
   //Check to see if there is an option to split
   splitCheck = () => {
+    if (this.state.playerHand[0].val === this.state.playerHand[1].val) {
+      this.setState({
+        showSplit: true
+      });
+    }
     // if playerhand[0] && playerhand[1] are the same, option to split Appears
     // if chosen amount same as bet in play goes to split div
     // slice occurs and moves card over
@@ -279,7 +293,9 @@ class Table extends Component {
     this.setState({
       dealerStand: true
     });
-    this.scoreCheck();
+    setTimeout(() => {
+      this.scoreCheck();
+    }, 1500);
   };
 
   playerStand = () => {
@@ -287,6 +303,7 @@ class Table extends Component {
     this.setState({
       firstDeal: true
     });
+
     this.dealerTurn();
   };
 
@@ -330,7 +347,7 @@ class Table extends Component {
 
   playerPush = () => {
     alert("player push ran");
-    var updated = this.state.currentBet + this.state.chipStack;
+    var updated = this.state.betInPlay + this.state.chipStack;
     this.setState({
       chipStack: updated
     });
@@ -346,8 +363,8 @@ class Table extends Component {
         dealerPoints: null,
         playerPoints: null,
         playerHand: [],
-        currentBet: null,
-        betInPlay: null,
+        currentBet: "",
+        betInPlay: 0,
         hideBetDiv: false,
         showSplit: false,
         splitSelected: false,
@@ -358,7 +375,7 @@ class Table extends Component {
     }
   };
 
-  roundOver = final => {
+  roundOver = () => {
     if (this.state.playerPoints > 21) {
       alert("You Lost");
       this.playerLose();
@@ -378,6 +395,7 @@ class Table extends Component {
   };
 
   render() {
+    const toggleSit = this.state.isSit ? { visibility: "hidden" } : {};
     const betDivStyle = this.state.hideBetDiv ? { visibility: "hidden" } : {};
     const splitButtStyle = this.state.showSplit ? {} : { visibility: "hidden" };
     const splitDivStyle = this.state.splitSelected
@@ -453,7 +471,11 @@ class Table extends Component {
                     </form>
                   </div>
                   {/* () => this.shuffle() */}
-                  <Button bsclass="success" onClick={this.shuffle}>
+                  <Button
+                    bsclass="success"
+                    style={toggleSit}
+                    onClick={this.shuffle}
+                  >
                     SIT
                   </Button>
                 </div>
