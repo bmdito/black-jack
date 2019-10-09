@@ -7,10 +7,10 @@ class Table extends Component {
     theDeck: [],
     currentShuffle: [],
     dealerHand: [],
-    dealerPoints: null,
-    playerPoints: null,
     playerHand: [],
     secondPlayerHand: [],
+    dealerPoints: null,
+    playerPoints: null,
     secPlayerPoints: null,
     secHandStand: false,
     currentBet: null,
@@ -362,6 +362,15 @@ class Table extends Component {
     this.dealerTurn();
   };
 
+  secPlayerStand = () => {
+    //still need to hide buttons after stand
+    console.log("split hand stayed");
+    this.setState({
+      secHandStand: true,
+      firstDeal: false
+    });
+  };
+
   //Need to take away ability to double and ability to split after 3rd card
   playerDouble = () => {
     console.log("player Doubled!");
@@ -384,18 +393,23 @@ class Table extends Component {
     let second = [];
     first.push(this.state.playerHand[0]);
     second.push(this.state.playerHand.pop());
-    console.log(first);
-    console.log(second);
+    let updatedBet = this.state.betInPlay * 2;
+    let updatedChips = this.state.chipStack - this.state.currentBet;
     this.setState({
       splitSelected: true,
+      showSplit: false,
+      firstDeal: true,
       playerHand: first,
-      secondPlayerHand: second
+      secondPlayerHand: second,
+      betInPlay: updatedBet,
+      chipStack: updatedChips
     });
   };
 
   playerWin = () => {
     alert("player Win ran");
-    var updated = this.state.currentBet * 2 + this.state.chipStack;
+
+    var updated = this.state.betInPlay * 2 + this.state.chipStack;
 
     this.setState({
       chipStack: updated
@@ -464,6 +478,7 @@ class Table extends Component {
     const splitDivStyle = this.state.splitSelected
       ? {}
       : { visibility: "hidden" };
+    const secButtHide = this.state.secHandStand ? { visibility: "hidden" } : {};
     const hitButtonAvail = this.state.firstDeal ? { visibility: "hidden" } : {};
     return (
       <>
@@ -512,6 +527,7 @@ class Table extends Component {
                   >
                     Split
                   </Button>
+                  <div className="chipCount">{this.state.chipStack}</div>
                   <div>
                     {this.state.playerHand.map((card, i) => {
                       return <Card key={i} val={card.val} suit={card.suit} />;
@@ -546,7 +562,7 @@ class Table extends Component {
                 </div>
                 <div className="posTwo" style={splitDivStyle}>
                   <Button
-                    style={hitButtonAvail}
+                    style={secButtHide}
                     bsclass="success"
                     className="hit-button"
                     onClick={this.playerHit}
@@ -554,15 +570,15 @@ class Table extends Component {
                     Hit
                   </Button>
                   <Button
-                    style={hitButtonAvail}
+                    style={secButtHide}
                     bsclass="success"
                     className="stand-button"
-                    onClick={this.playerStand}
+                    onClick={this.secPlayerStand}
                   >
                     Stand
                   </Button>
                   <Button
-                    style={hitButtonAvail}
+                    style={secButtHide}
                     bsclass="success"
                     className="double-button"
                     onClick={this.playerDouble}
