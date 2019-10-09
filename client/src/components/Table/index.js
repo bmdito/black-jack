@@ -10,9 +10,12 @@ class Table extends Component {
     dealerPoints: null,
     playerPoints: null,
     playerHand: [],
+    secondPlayerHand: [],
+    secPlayerPoints: null,
+    secHandStand: false,
     currentBet: null,
     chipStack: 100,
-    betInPlay: null,
+    betInPlay: 0,
     hideBetDiv: true,
     showSplit: false,
     splitSelected: false,
@@ -88,7 +91,8 @@ class Table extends Component {
     console.log("...generating deck");
 
     this.setState({
-      theDeck: generatedDeck
+      theDeck: generatedDeck,
+      currentShuffle: generatedDeck
     });
   }
 
@@ -106,7 +110,7 @@ class Table extends Component {
 
     console.log(shuffled);
     this.setState({
-      currentShuffle: shuffled,
+      // currentShuffle: shuffled,
       hideBetDiv: false,
       isSit: true
     });
@@ -152,10 +156,13 @@ class Table extends Component {
     let sampDealerHand = [...this.state.dealerHand];
     console.log(sampDealerHand);
     let sampPlayerHand = [...this.state.playerHand];
+
     let currentDealer = 0;
     var currentPlayer = 0;
+    var currentPlayerTwo = 0;
     var dealerAceCount = 0;
     var playerAceCount = 0;
+    var playerAceCountTwo = 0;
 
     for (var i = 0; i < sampDealerHand.length; i++) {
       if (
@@ -187,6 +194,24 @@ class Table extends Component {
       }
     }
 
+    if (this.state.splitSelected) {
+      let sampPlayerHandTwo = [...this.state.secondPlayerHand];
+      for (var i = 0; i < sampPlayerHandTwo.length; i++) {
+        if (
+          sampPlayerHandTwo[i].val === "J" ||
+          sampPlayerHandTwo[i].val === "Q" ||
+          sampPlayerHandTwo[i].val === "K"
+        ) {
+          currentPlayerTwo += 10;
+        } else if (sampPlayerHandTwo[i].val === "A") {
+          currentPlayerTwo += 11;
+          playerAceCountTwo++;
+        } else {
+          currentPlayerTwo += parseInt(sampPlayerHandTwo[i].val);
+        }
+      }
+    }
+
     if (currentDealer > 21 && dealerAceCount > 0) {
       while (dealerAceCount > 0 && currentDealer > 21) {
         currentDealer -= 10;
@@ -200,16 +225,29 @@ class Table extends Component {
         playerAceCount--;
       }
     }
+
+    if (currentPlayerTwo > 21 && playerAceCountTwo > 0) {
+      while (playerAceCountTwo > 0 && currentPlayerTwo > 21) {
+        currentPlayerTwo -= 10;
+        playerAceCountTwo--;
+      }
+    }
     // const d = this.dealerTurn(currentDealer);
 
     console.log("current player score:" + currentPlayer);
     console.log("current dealer score:" + currentDealer);
+    console.log("current Split hand score" + currentPlayerTwo);
     this.setState({
       playerPoints: currentPlayer,
-      dealerPoints: currentDealer
+      dealerPoints: currentDealer,
+      secPlayerPoints: currentPlayerTwo
     });
 
-    if (this.state.dealerPoints === 21 && this.state.dealerHand.length === 2) {
+    if (
+      this.state.dealerPoints === 21 &&
+      this.state.dealerHand.length === 2 &&
+      this.state.playerHand < 21
+    ) {
       this.playerLose();
     }
 
@@ -228,11 +266,14 @@ class Table extends Component {
 
   //Check to see if there is an option to split
   splitCheck = () => {
-    if (this.state.playerHand[0].val === this.state.playerHand[1].val) {
-      this.setState({
-        showSplit: true
-      });
+    if (!this.state.splitSelected) {
+      if (this.state.playerHand[0].val === this.state.playerHand[1].val) {
+        this.setState({
+          showSplit: true
+        });
+      }
     }
+
     // if playerhand[0] && playerhand[1] are the same, option to split Appears
     // if chosen amount same as bet in play goes to split div
     // slice occurs and moves card over
@@ -242,11 +283,25 @@ class Table extends Component {
   // draw a card
   playerHit = () => {
     console.log("player hit!");
-    let current = [...this.state.playerHand, this.state.currentShuffle[0]];
+    if (this.state.splitSelected && this.state.secHandStand === false) {
+      let splitCurrent = [
+        ...this.state.secondPlayerHand,
+        this.state.currentShuffle[0]
+      ];
+      this.setState({
+        secondPlayerHand: splitCurrent
+      });
+    } else {
+      let current = [...this.state.playerHand, this.state.currentShuffle[0]];
+      this.setState({
+        playerHand: current
+      });
+    }
+
+    // let current = [...this.state.playerHand, this.state.currentShuffle[0]];
     let adjusted = [...this.state.currentShuffle].slice(1);
 
     this.setState({
-      playerHand: current,
       currentShuffle: adjusted
     });
 
@@ -325,8 +380,16 @@ class Table extends Component {
 
   playerSplit = () => {
     console.log("Player Split");
+    let first = [];
+    let second = [];
+    first.push(this.state.playerHand[0]);
+    second.push(this.state.playerHand.pop());
+    console.log(first);
+    console.log(second);
     this.setState({
-      splitSelected: true
+      splitSelected: true,
+      playerHand: first,
+      secondPlayerHand: second
     });
   };
 
@@ -449,9 +512,11 @@ class Table extends Component {
                   >
                     Split
                   </Button>
-                  {this.state.playerHand.map((card, i) => {
-                    return <Card key={i} val={card.val} suit={card.suit} />;
-                  })}
+                  <div>
+                    {this.state.playerHand.map((card, i) => {
+                      return <Card key={i} val={card.val} suit={card.suit} />;
+                    })}
+                  </div>
                   <div className="betOne betDiv">betOne</div>
                   {/* <Button bsclass="success" onClick={() => this.placeBet()}>
                     Place Bet
@@ -480,7 +545,35 @@ class Table extends Component {
                   </Button>
                 </div>
                 <div className="posTwo" style={splitDivStyle}>
-                  <div className="betTwo betDiv">betTwo</div>
+                  <Button
+                    style={hitButtonAvail}
+                    bsclass="success"
+                    className="hit-button"
+                    onClick={this.playerHit}
+                  >
+                    Hit
+                  </Button>
+                  <Button
+                    style={hitButtonAvail}
+                    bsclass="success"
+                    className="stand-button"
+                    onClick={this.playerStand}
+                  >
+                    Stand
+                  </Button>
+                  <Button
+                    style={hitButtonAvail}
+                    bsclass="success"
+                    className="double-button"
+                    onClick={this.playerDouble}
+                  >
+                    Double
+                  </Button>
+                  <div>
+                    {this.state.secondPlayerHand.map((card, i) => {
+                      return <Card key={i} val={card.val} suit={card.suit} />;
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
