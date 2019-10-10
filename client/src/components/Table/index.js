@@ -95,6 +95,18 @@ class Table extends Component {
       currentShuffle: generatedDeck
     });
   }
+  // activates on sit
+  takeSeat = () => {
+    this.setState({
+      // currentShuffle: shuffled,
+      hideBetDiv: false,
+      isSit: true
+    });
+    // this.promptBuyin();
+    this.shuffle();
+  };
+
+  // promptBuyIn = () => {};
 
   //creates randomly shuffled deck
   shuffle = () => {
@@ -109,11 +121,6 @@ class Table extends Component {
     }
 
     console.log(shuffled);
-    this.setState({
-      // currentShuffle: shuffled,
-      hideBetDiv: false,
-      isSit: true
-    });
   };
 
   //Initial Deal
@@ -437,12 +444,15 @@ class Table extends Component {
     } else {
       this.setState({
         dealerHand: [],
+        playerHand: [],
+        secondPlayerHand: [],
         dealerPoints: null,
         playerPoints: null,
-        playerHand: [],
+        secPlayerPoints: null,
+        secHandStand: false,
         currentBet: "",
         betInPlay: 0,
-        hideBetDiv: false,
+        hideBetDiv: true,
         showSplit: false,
         splitSelected: false,
         firstDeal: true,
@@ -555,7 +565,7 @@ class Table extends Component {
                   <Button
                     bsclass="success"
                     style={toggleSit}
-                    onClick={this.shuffle}
+                    onClick={this.takeSeat}
                   >
                     SIT
                   </Button>
