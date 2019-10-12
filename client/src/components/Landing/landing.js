@@ -2,7 +2,11 @@ import React, { Component } from "react";
 
 class Landing extends Component {
   render() {
-    return <div>Here is the landing</div>;
+    return (
+      <>
+        <div>Landing Page</div>
+      </>
+    );
   }
 }
 

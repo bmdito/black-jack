@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   chips: {
-    type: number
+    type: Number
   },
   //put this in user model so its always accessible
   avatar: {
