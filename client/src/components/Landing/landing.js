@@ -10,12 +10,16 @@ class Landing extends Component {
         <div className="background-img">
           <div className="inner">
             <div className="buttons">
-              <Link to="/register" className="btn btn-primary">
-                Sign Up
-              </Link>
-              <Link to="/login" className="btn btn-light">
-                Login
-              </Link>
+              <div className="logButt">
+                <Link to="/login" className="btn btn-primary">
+                  Login
+                </Link>
+              </div>
+              <div className="regButt">
+                <Link to="/register" className="btn btn-light">
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </div>
         </div>

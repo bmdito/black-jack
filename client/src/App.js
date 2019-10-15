@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import Table from "./components/Table";
 import Landing from "./components/Landing/landing";
-import Register from "./components/auth/Register";
+import Register from "./components/Register/index";
 
 import { Button } from "react-bootstrap";
 // import makeDeck from "./utils/deck";

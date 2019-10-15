@@ -8,4 +8,39 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
+}
+
+.inner {
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 20px;
+  margin-top: 16%;
+  margin-left: 20%;
+  height: 300px;
+  width: 400px;
+  position: absolute;
+}
+
+.buttons {
+  position: absolute;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  top: 210px;
+  left: 54px;
+}
+
+.regButt {
+}
+
+.logButt {
+}
+
+.inner {
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 20px;
+  height: 300px;
+  width: 250px;
 }
