@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import Table from "./components/Table";
 import Landing from "./components/Landing/landing";
 import Register from "./components/Register/index";
+import Navbar from "./components/Navbar/Navbar";
 
 import { Button } from "react-bootstrap";
 // import makeDeck from "./utils/deck";
@@ -13,6 +14,7 @@ function App() {
   // makeDeck();
   return (
     <Router>
+      <Navbar />
       <Fragment>
         {/* navbar here */}
         <Route exact path="/" component={Landing} />

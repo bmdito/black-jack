@@ -65,6 +65,7 @@ class Register extends Component {
         password: this.state.password
       })
         .then(res => {
+          console.log(res);
           API.userLogin({
             email: this.state.email,
             password: this.state.password
