@@ -3,19 +3,25 @@ import { render } from "react-dom";
 import Modal from "react-modal";
 import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
 import ModalRoot from "../LoginModal/ModalRoot";
+import Register from "../Register/index";
+import "./Navbar.css";
 
 const Modal1 = ({ onRequestClose, ...otherProps }) => (
-  <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
-    <button onClick={onRequestClose}>close</button>
-    <div>I am a modal</div>
-  </Modal>
+  <div className="modal-wrapper">
+    <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
+      {/* <button onClick={onRequestClose}>close</button> */}
+      <div>Here is login!</div>
+    </Modal>
+  </div>
 );
 
 const Modal2 = ({ onRequestClose, foo, ...otherProps }) => (
-  <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
-    <button onClick={onRequestClose}>close</button>
-    <div>second modal {foo}</div>
-  </Modal>
+  <div className="modal-wrapper">
+    <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
+      {/* <button onClick={onRequestClose}>close</button> */}
+      <Register />
+    </Modal>
+  </div>
 );
 
 const checkAuth = () => {
@@ -28,7 +34,7 @@ function Navbar() {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="#">
-            Navbar
+            Hot Aces
           </a>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {checkAuth() ? (
@@ -41,11 +47,17 @@ function Navbar() {
                     <ModalConsumer>
                       {({ showModal }) => (
                         <Fragment>
-                          <button onClick={() => showModal(Modal1)}>
-                            Log In
+                          <button
+                            className="logButt"
+                            onClick={() => showModal(Modal1)}
+                          >
+                            <span className="navFont">Login</span>
                           </button>
-                          <button onClick={() => showModal(Modal2)}>
-                            Register
+                          <button
+                            className="logButt"
+                            onClick={() => showModal(Modal2)}
+                          >
+                            <span className="navFont">Register</span>
                           </button>
                         </Fragment>
                       )}

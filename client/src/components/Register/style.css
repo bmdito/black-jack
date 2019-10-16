@@ -3,8 +3,7 @@
 }
 
 .form {
-  padding-right: 25%;
-  padding-left: 25%;
+  padding: 10% 10%;
 }
 
 .form .form-text {
@@ -24,6 +23,12 @@
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
+}
+
+.subButt {
+  padding: 5px 18px;
+  margin: 30px;
+  border-radius: 20px;
 }
 
 .error-style {
