@@ -3,7 +3,7 @@
 }
 
 .form {
-  padding: 2% 5%;
+  padding: 4% 4%;
 }
 
 .form .form-text {
@@ -21,11 +21,8 @@
   display: block;
   width: 100%;
   padding: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   border: 1px solid #ccc;
-  border-radius: 16px;
-  outline: 0;
-  box-shadow: 3px 1px 6px;
 }
 
 .subButt {

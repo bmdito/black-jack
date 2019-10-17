@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Landing from "./components/Landing/landing";
 import Register from "./components/Register/index";
 import Navbar from "./components/Navbar/Navbar";
+import Table from "./components/Table/index";
 
 import { Button } from "react-bootstrap";
 // import makeDeck from "./utils/deck";
@@ -21,6 +22,7 @@ function App() {
         <section className="App">
           <Switch>
             <Route exact path="/register" component={Register} />
+            <Route exact path="/table" component={Table} />
             {/* <Route exact path="/login" component={Login} /> */}
           </Switch>
         </section>

@@ -7,20 +7,12 @@ class Landing extends Component {
     return (
       <>
         <div className="background-img">
-          {/* <div className="inner">
-            <div className="buttons">
-              <div className="logButt">
-                <Link to="/login" className="btn btn-primary">
-                  Login
-                </Link>
-              </div>
-              <div className="regButt">
-                <Link to="/register" className="btn btn-light">
-                  Sign Up
-                </Link>
-              </div>
-            </div>
-          </div> */}
+          <div className="landing-main">
+            <h1 className="title-head">Welcome to Hot Aces!</h1>
+            <p className="landing-text">
+              You've found the hottest BlackJack game on the interwebs!
+            </p>
+          </div>
         </div>
       </>
     );

@@ -4,13 +4,14 @@ import Modal from "react-modal";
 import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
 import ModalRoot from "../LoginModal/ModalRoot";
 import Register from "../Register/index";
+import Login from "../Login/Login";
 import "./Navbar.css";
 
 const Modal1 = ({ onRequestClose, ...otherProps }) => (
   <div className="modal-wrapper">
     <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
       {/* <button onClick={onRequestClose}>close</button> */}
-      <div>Here is login!</div>
+      <Login />
     </Modal>
   </div>
 );
@@ -34,9 +35,36 @@ function Navbar() {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="#">
-            Hot Aces
+            <span className="brandy">Hot Aces</span>
           </a>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            {checkAuth() ? (
+              <>
+                // My Profile
+                <button className="logButt" href="/" color="inherit">
+                  <span className="navFont">My Profile</span>
+                </button>
+                // Join Table
+                <button className="logButt" href="/table" color="inherit">
+                  <span className="navFont">Join Table</span>
+                </button>
+              </>
+            ) : (
+              <>
+                {/* My Profile  */}
+                <button className="logButt navHide" href="/" color="inherit">
+                  <span className="navFont">My Profile</span>
+                </button>
+                {/* Join Table Button */}
+                <button
+                  className="logButt navHide"
+                  href="/table"
+                  color="inherit"
+                >
+                  <span className="navFont">Join Table</span>
+                </button>
+              </>
+            )}
             {checkAuth() ? (
               <div>logout</div>
             ) : (

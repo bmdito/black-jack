@@ -11,6 +11,26 @@
   position: relative;
 }
 
+.landing-main {
+  z-index: 100;
+  color: white;
+  font-weight: bolder;
+
+  position: absolute;
+  top: 40%;
+  left: 3%;
+}
+
+.title-head {
+  font-size: 40px;
+}
+
+.landing-text {
+  margin-top: 40px;
+  margin-left: 0%;
+  font-size: 19px;
+}
+
 .inner {
   border: 2px solid black;
   background-color: white;
