@@ -5,6 +5,8 @@ import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
 import ModalRoot from "../LoginModal/ModalRoot";
 import Register from "../Register/index";
 import Login from "../Login/Login";
+import decode from "jwt-decode";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Modal1 = ({ onRequestClose, ...otherProps }) => (
@@ -26,7 +28,17 @@ const Modal2 = ({ onRequestClose, foo, ...otherProps }) => (
 );
 
 const checkAuth = () => {
-  return false;
+  const token = localStorage.getItem("x-auth-token");
+  if (!token) {
+    return false;
+  } else {
+    //Get expiration and id of user from token
+    const { exp } = decode(token);
+    if (exp < Date.now() / 1000) {
+      return false;
+    }
+  }
+  return true;
 };
 
 function Navbar() {
@@ -40,14 +52,16 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {checkAuth() ? (
               <>
-                // My Profile
-                <button className="logButt" href="/" color="inherit">
-                  <span className="navFont">My Profile</span>
-                </button>
-                // Join Table
-                <button className="logButt" href="/table" color="inherit">
-                  <span className="navFont">Join Table</span>
-                </button>
+                <div className="ml-auto">
+                  <button className="logButt" href="/" color="inherit">
+                    <span className="navFont">My Profile</span>
+                  </button>
+                  <Link to="/table">
+                    <button type="button" className="logButt" color="inherit">
+                      <span className="navFont">Join Table</span>
+                    </button>
+                  </Link>
+                </div>
               </>
             ) : (
               <>
@@ -66,7 +80,7 @@ function Navbar() {
               </>
             )}
             {checkAuth() ? (
-              <div>logout</div>
+              <button className="logButt logOut">logout</button>
             ) : (
               <>
                 <div className="ml-auto">

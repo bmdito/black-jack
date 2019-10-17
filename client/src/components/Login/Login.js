@@ -52,27 +52,18 @@ class Login extends Component {
     console.log("you submitted");
     let isValid = this.validate();
     if (isValid) {
-      API.userRegister({
-        name: this.state.name,
+      API.userLogin({
         email: this.state.email.toLowerCase(),
         password: this.state.password
       })
         .then(res => {
-          console.log(res);
-          API.userLogin({
-            email: this.state.email,
-            password: this.state.password
-          })
-            .then(res => {
-              localStorage.setItem("x-auth-token", res.data.token);
-              window.location.href = "/";
-              alert("Register success!");
-            })
-            .catch(err => console.log(err));
+          localStorage.setItem("x-auth-token", res.data.token);
+          window.location.href = "/";
+          alert("Login Success!");
         })
         .catch(err => console.log(err));
     } else {
-      let failedError = "Registration Failed!";
+      let failedError = "login Failed!";
 
       this.setState({
         failedError

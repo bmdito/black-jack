@@ -23,7 +23,6 @@ function App() {
           <Switch>
             <Route exact path="/register" component={Register} />
             <Route exact path="/table" component={Table} />
-            {/* <Route exact path="/login" component={Login} /> */}
           </Switch>
         </section>
       </Fragment>
