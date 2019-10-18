@@ -12,6 +12,7 @@
 .logButt {
   margin-right: 20px;
   border-radius: 25px;
+  outline: 0;
 }
 
 .logOut {

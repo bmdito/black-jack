@@ -452,7 +452,7 @@ class Table extends Component {
         secHandStand: false,
         currentBet: "",
         betInPlay: 0,
-        hideBetDiv: true,
+        hideBetDiv: false,
         showSplit: false,
         splitSelected: false,
         firstDeal: true,
