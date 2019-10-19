@@ -562,13 +562,15 @@ class Table extends Component {
                     </form>
                   </div>
                   {/* () => this.shuffle() */}
-                  <Button
-                    bsclass="success"
-                    style={toggleSit}
-                    onClick={this.takeSeat}
-                  >
-                    SIT
-                  </Button>
+                  <div className="sitButt">
+                    <Button
+                      bsclass="success"
+                      style={toggleSit}
+                      onClick={this.takeSeat}
+                    >
+                      SIT
+                    </Button>
+                  </div>
                 </div>
                 <div className="posTwo" style={splitDivStyle}>
                   <Button
