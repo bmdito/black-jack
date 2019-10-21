@@ -12,6 +12,15 @@ body {
   position: relative;
 }
 
+.table-img {
+  position: absolute;
+  top: 42%;
+  left: 47%;
+  width: 65px;
+  height: 65px;
+  border-radius: 100%;
+}
+
 .dealerPos {
   background-color: pink;
   position: absolute;

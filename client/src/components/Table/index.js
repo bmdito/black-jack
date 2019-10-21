@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import container, { Button } from "react-bootstrap";
+import spades from "../../assets/images/ace-of-spades.jpg";
 import "./style.css";
 
 class Table extends Component {
@@ -497,6 +498,9 @@ class Table extends Component {
             <div className="col-md-1"></div>
             <div className="col-md-10">
               <div className="table-visual">
+                <div>
+                  <img className="table-img" src={spades} />
+                </div>
                 <div className="dealerPos">
                   <div>
                     {this.state.dealerHand.map((card, i) => {

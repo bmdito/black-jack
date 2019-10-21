@@ -5,6 +5,7 @@ import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
 import ModalRoot from "../LoginModal/ModalRoot";
 import Register from "../Register/index";
 import Login from "../Login/Login";
+import Logout from "../Logout/Logout";
 import decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
@@ -44,7 +45,7 @@ const checkAuth = () => {
 function Navbar() {
   return (
     <>
-      <div className="container">
+      <div className="container-fullwidth">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="#">
             <span className="brandy">Hot Aces</span>
@@ -80,7 +81,7 @@ function Navbar() {
               </>
             )}
             {checkAuth() ? (
-              <button className="logButt logOut">logout</button>
+              <Logout />
             ) : (
               <>
                 <div className="ml-auto">
