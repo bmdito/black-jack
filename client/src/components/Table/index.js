@@ -11,6 +11,7 @@ const widModal = ({ onRequestClose, ...otherProps }) => (
   <div className="modal-wrapper">
     <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
       {/* <button onClick={onRequestClose}>close</button> */}
+
       <Withdrawal />
     </Modal>
   </div>
@@ -28,7 +29,7 @@ class Table extends Component {
     secPlayerPoints: null,
     secHandStand: false,
     currentBet: undefined,
-    chipStack: 100,
+    chipStack: null,
     betInPlay: 0,
     hideBetDiv: true,
     showSplit: false,
@@ -109,6 +110,12 @@ class Table extends Component {
       currentShuffle: generatedDeck
     });
   }
+
+  showSit = () => {
+    this.setState({
+      isSit: false
+    });
+  };
   // activates on sit
   takeSeat = () => {
     console.log("SAT DOWN");
@@ -503,7 +510,13 @@ class Table extends Component {
   };
 
   render() {
-    const toggleSit = this.state.isSit ? { visibility: "hidden" } : {};
+    const toggleSit = localStorage.getItem("funds")
+      ? {}
+      : { visibility: "hidden" };
+
+    const toggleBuy = localStorage.getItem("funds")
+      ? { visibility: "hidden" }
+      : {};
     const betDivStyle = this.state.hideBetDiv ? { visibility: "hidden" } : {};
     const splitButtStyle = this.state.showSplit ? {} : { visibility: "hidden" };
     const splitDivStyle = this.state.splitSelected
@@ -511,6 +524,7 @@ class Table extends Component {
       : { visibility: "hidden" };
     const secButtHide = this.state.secHandStand ? { visibility: "hidden" } : {};
     const hitButtonAvail = this.state.firstDeal ? { visibility: "hidden" } : {};
+
     return (
       <>
         <div className="container container-fluid">
@@ -592,13 +606,14 @@ class Table extends Component {
                       {({ showModal }) => (
                         <Fragment>
                           <button
-                            className="success"
+                            className="buyButt"
+                            style={toggleBuy}
                             // style={}
                             onClick={() => {
                               showModal(widModal);
                             }}
                           >
-                            <span className="buyButt">Buy In</span>
+                            <span>Buy In</span>
                           </button>
                         </Fragment>
                       )}

@@ -46,6 +46,7 @@ class Withdrawal extends Component {
     console.log("you submitted");
     let final = this.state.withdrawal;
     localStorage.setItem("funds", final);
+    window.location.reload();
   };
 
   validate = () => {
