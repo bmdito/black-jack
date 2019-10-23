@@ -510,9 +510,10 @@ class Table extends Component {
   };
 
   render() {
-    const toggleSit = localStorage.getItem("funds")
-      ? {}
-      : { visibility: "hidden" };
+    const toggleSit =
+      localStorage.getItem("funds") && this.state.isSit === false
+        ? {}
+        : { visibility: "hidden" };
 
     const toggleBuy = localStorage.getItem("funds")
       ? { visibility: "hidden" }
