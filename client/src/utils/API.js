@@ -7,5 +7,9 @@ export default {
 
   userLogin: function(data) {
     return axios.post("/api/auth", data);
+  },
+
+  checkAvailChips: function(data) {
+    return axios.get("/api/availchips", data);
   }
 };

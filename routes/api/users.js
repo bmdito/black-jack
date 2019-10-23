@@ -51,7 +51,8 @@ router.post(
         name,
         email,
         avatar,
-        password
+        password,
+        chips: 200
       });
 
       //encrypt password with bycrpt

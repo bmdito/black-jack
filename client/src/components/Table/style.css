@@ -38,6 +38,10 @@ body {
   height: 160px;
 }
 
+.buyButt {
+  top: 20px;
+}
+
 .sitButt {
   border-radius: 20px;
   border-radius: 20px;
@@ -48,28 +52,28 @@ body {
 .hit-button {
   position: absolute;
   top: -50px;
-  left: 63px;
+  left: 5px;
   width: 90px;
 }
 
 .stand-button {
   position: absolute;
   top: -50px;
-  left: 170px;
+  left: 115px;
   width: 90px;
 }
 
 .double-button {
   position: absolute;
   top: -50px;
-  left: 309px;
+  left: 225px;
   width: 90px;
 }
 
 .split-button {
   position: absolute;
   top: -96px;
-  left: 65px;
+  left: 5px;
   width: 169px;
 }
 

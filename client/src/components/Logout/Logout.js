@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Logout extends Component {
   handleLogout = event => {
     localStorage.removeItem("x-auth-token");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   render() {

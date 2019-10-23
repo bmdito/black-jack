@@ -1,7 +1,20 @@
-import React, { Component } from "react";
-import container, { Button } from "react-bootstrap";
+import React, { Component, Fragment } from "react";
+import { Button } from "react-bootstrap";
 import spades from "../../assets/images/ace-of-spades.jpg";
 import "./style.css";
+import Modal from "react-modal";
+import Withdrawal from "../Withdrawal/index";
+import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
+import ModalRoot from "../LoginModal/ModalRoot";
+
+const widModal = ({ onRequestClose, ...otherProps }) => (
+  <div className="modal-wrapper">
+    <Modal isOpen onRequestClose={onRequestClose} {...otherProps}>
+      {/* <button onClick={onRequestClose}>close</button> */}
+      <Withdrawal />
+    </Modal>
+  </div>
+);
 
 class Table extends Component {
   state = {
@@ -14,7 +27,7 @@ class Table extends Component {
     playerPoints: null,
     secPlayerPoints: null,
     secHandStand: false,
-    currentBet: null,
+    currentBet: undefined,
     chipStack: 100,
     betInPlay: 0,
     hideBetDiv: true,
@@ -98,6 +111,8 @@ class Table extends Component {
   }
   // activates on sit
   takeSeat = () => {
+    console.log("SAT DOWN");
+
     this.setState({
       // currentShuffle: shuffled,
       hideBetDiv: false,
@@ -106,6 +121,11 @@ class Table extends Component {
     // this.promptBuyin();
     this.shuffle();
   };
+
+  // fundhandle = funds => {
+  //   alert("child called the parent");
+  //   this.setState({betInPlay:funds})
+  // };
 
   // promptBuyIn = () => {};
 
@@ -566,13 +586,31 @@ class Table extends Component {
                     </form>
                   </div>
                   {/* () => this.shuffle() */}
+                  <ModalProvider>
+                    <ModalRoot />
+                    <ModalConsumer>
+                      {({ showModal }) => (
+                        <Fragment>
+                          <button
+                            className="success"
+                            // style={}
+                            onClick={() => {
+                              showModal(widModal);
+                            }}
+                          >
+                            <span className="buyButt">Buy In</span>
+                          </button>
+                        </Fragment>
+                      )}
+                    </ModalConsumer>
+                  </ModalProvider>
                   <div className="sitButt">
                     <Button
                       bsclass="success"
                       style={toggleSit}
                       onClick={this.takeSeat}
                     >
-                      SIT
+                      Take Seat!
                     </Button>
                   </div>
                 </div>
