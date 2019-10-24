@@ -17,6 +17,7 @@ app.use(express.static("public"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/availchips", require("./routes/api/availchips"));
+app.use("/api/updatedChips", require("./routes/api/updatedChips"));
 
 app.get("/", (req, res) => res.send("API Running"));
 

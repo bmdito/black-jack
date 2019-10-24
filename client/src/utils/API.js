@@ -11,5 +11,9 @@ export default {
 
   checkAvailChips: function(data) {
     return axios.get("/api/availchips", data);
+  },
+
+  updatedChips: function(data) {
+    return axios.post("/api/updatedChips", data);
   }
 };

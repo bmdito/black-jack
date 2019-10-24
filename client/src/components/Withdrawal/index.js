@@ -45,7 +45,11 @@ class Withdrawal extends Component {
     event.preventDefault();
     console.log("you submitted");
     let final = this.state.withdrawal;
+    let theName = this.state.userInfo[0].name;
+    let diff = this.state.userInfo[0].chips - final;
+    localStorage.setItem("name", theName);
     localStorage.setItem("funds", final);
+    localStorage.setItem("diff", diff);
     window.location.reload();
   };
 

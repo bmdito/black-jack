@@ -22,7 +22,6 @@ body {
 }
 
 .dealerPos {
-  background-color: pink;
   position: absolute;
   left: 28%;
   top: 20px;
@@ -96,13 +95,33 @@ body {
   height: 160px;
 }
 
+.playerName {
+  color: black;
+  position: absolute;
+  top: 170px;
+  left: -145px;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
 .chipCount {
   color: blue;
   position: absolute;
-  top: 186px;
+  top: 212px;
   left: -90px;
   font-size: 20px;
   font-weight: bolder;
+}
+
+.standUpButt {
+  top: 190px;
+  font-size: 30px;
+  padding: 20px 40px;
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 1px 2px 2px 2px;
+  position: absolute;
+  left: 20px;
 }
 .betDiv {
   border-radius: 100%;

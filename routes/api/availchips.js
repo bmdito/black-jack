@@ -7,7 +7,7 @@ const chipCheck = require("../../models/User");
 //@Desc
 //@Access	Public
 router.get("/", (req, res) => {
-  chipCheck.find().then(count => res.json(count));
+  chipCheck.find(req.body).then(count => res.json(count));
 });
 
 module.exports = router;

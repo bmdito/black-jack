@@ -6,6 +6,8 @@ import Modal from "react-modal";
 import Withdrawal from "../Withdrawal/index";
 import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
 import ModalRoot from "../LoginModal/ModalRoot";
+import decode from "jwt-decode";
+import API from "../../utils/API";
 
 const widModal = ({ onRequestClose, ...otherProps }) => (
   <div className="modal-wrapper">
@@ -29,6 +31,8 @@ class Table extends Component {
     secPlayerPoints: null,
     secHandStand: false,
     currentBet: undefined,
+    currentPlayerName: "",
+    chipsAfterWithdrawal: null,
     chipStack: null,
     betInPlay: 0,
     hideBetDiv: true,
@@ -37,7 +41,8 @@ class Table extends Component {
     firstDeal: true,
     dealerTurn: false,
     dealerStand: false,
-    isSit: false
+    isSit: false,
+    showStandUp: false
   };
 
   componentDidMount() {
@@ -106,35 +111,27 @@ class Table extends Component {
     console.log("...generating deck");
 
     this.setState({
-      theDeck: generatedDeck,
-      currentShuffle: generatedDeck
+      theDeck: generatedDeck
     });
   }
 
-  showSit = () => {
-    this.setState({
-      isSit: false
-    });
-  };
   // activates on sit
   takeSeat = () => {
     console.log("SAT DOWN");
+    const buyIn = localStorage.getItem("funds");
+    const sitName = localStorage.getItem("name");
+    const remaining = localStorage.getItem("diff");
 
     this.setState({
-      // currentShuffle: shuffled,
       hideBetDiv: false,
-      isSit: true
+      isSit: true,
+      chipStack: buyIn,
+      currentPlayerName: sitName,
+      chipsAfterWithdrawal: remaining
     });
     // this.promptBuyin();
     this.shuffle();
   };
-
-  // fundhandle = funds => {
-  //   alert("child called the parent");
-  //   this.setState({betInPlay:funds})
-  // };
-
-  // promptBuyIn = () => {};
 
   //creates randomly shuffled deck
   shuffle = () => {
@@ -147,7 +144,9 @@ class Table extends Component {
         shuffled.push(current);
       }
     }
-
+    this.setState({
+      currentShuffle: shuffled
+    });
     console.log(shuffled);
   };
 
@@ -165,7 +164,8 @@ class Table extends Component {
     this.setState({
       playerHand: playerDealt,
       dealerHand: dealerDealt,
-      currentShuffle: updated
+      currentShuffle: updated,
+      showStandUp: false
     });
 
     setTimeout(() => {
@@ -283,7 +283,7 @@ class Table extends Component {
       this.state.dealerHand.length === 2 &&
       this.state.playerHand < 21
     ) {
-      this.playerLose();
+      this.roundOver();
     }
 
     if (this.state.dealerStand) {
@@ -441,6 +441,18 @@ class Table extends Component {
     });
   };
 
+  standUpFromTable = () => {
+    alert("player stood up!");
+    var token = localStorage.getItem("x-auth-token");
+    var decoded = decode(token);
+    var id = decoded.user.id;
+    const finalChips = this.state.chipsAfterWithdrawal + this.state.chipStack;
+    API.updatedChips({ id, finalChips }).then(res => {
+      // updated info used here.
+      console.log(res);
+    });
+  };
+
   playerWin = () => {
     alert("player Win ran");
 
@@ -485,7 +497,8 @@ class Table extends Component {
         splitSelected: false,
         firstDeal: true,
         dealerTurn: false,
-        dealerStand: false
+        dealerStand: false,
+        showStandUp: true
       });
     }
   };
@@ -525,6 +538,7 @@ class Table extends Component {
       : { visibility: "hidden" };
     const secButtHide = this.state.secHandStand ? { visibility: "hidden" } : {};
     const hitButtonAvail = this.state.firstDeal ? { visibility: "hidden" } : {};
+    const standUpStyle = this.state.showStandUp ? {} : { visibility: "hidden" };
 
     return (
       <>
@@ -576,7 +590,23 @@ class Table extends Component {
                   >
                     Split
                   </Button>
-                  <div className="chipCount">{this.state.chipStack}</div>
+
+                  <Button
+                    style={standUpStyle}
+                    className="standUpButt"
+                    onClick={this.standUpFromTable}
+                  >
+                    StandUp
+                  </Button>
+
+                  {/* Show information on Sitting Player */}
+                  <div className="playerInfo">
+                    <div className="sitAvatar"></div>
+                    <div className="playerName">
+                      {this.state.currentPlayerName}
+                    </div>
+                    <div className="chipCount">{this.state.chipStack}</div>
+                  </div>
                   <div>
                     {this.state.playerHand.map((card, i) => {
                       return <Card key={i} val={card.val} suit={card.suit} />;
