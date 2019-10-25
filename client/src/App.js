@@ -9,6 +9,7 @@ import Landing from "./components/Landing/landing";
 import Register from "./components/Register/index";
 import Navbar from "./components/Navbar/Navbar";
 import Table from "./components/Table/index";
+import Profile from "./components/Profile/index";
 
 import { Button } from "react-bootstrap";
 import decode from "jwt-decode";
@@ -54,10 +55,12 @@ function App() {
       <Fragment>
         {/* navbar here */}
         <Route exact path="/" component={Landing} />
+
         <section className="App">
           <Switch>
             {/* <Route exact path="/register" component={Register} /> */}
             <Route exact path="/table" component={Table} />
+            <Route exact path="/profile" component={Profile} />
           </Switch>
         </section>
       </Fragment>

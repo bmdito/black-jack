@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 // import API from "../../utils/API";
 import decode from "jwt-decode";
-import axios from "axios";
 import API from "../../utils/API";
 import "./style.css";
 

@@ -54,9 +54,11 @@ function Navbar() {
             {checkAuth() ? (
               <>
                 <div className="ml-auto">
-                  <button className="logButt" href="/" color="inherit">
-                    <span className="navFont">My Profile</span>
-                  </button>
+                  <Link to="/profile">
+                    <button className="logButt" color="inherit">
+                      <span className="navFont">My Profile</span>
+                    </button>
+                  </Link>
                   <Link to="/table">
                     <button type="button" className="logButt" color="inherit">
                       <span className="navFont">Join Table</span>
@@ -67,7 +69,7 @@ function Navbar() {
             ) : (
               <>
                 {/* My Profile  */}
-                <button className="logButt navHide" href="/" color="inherit">
+                <button className="logButt navHide" color="inherit">
                   <span className="navFont">My Profile</span>
                 </button>
                 {/* Join Table Button */}
