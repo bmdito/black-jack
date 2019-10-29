@@ -1,12 +1,12 @@
 body {
   background-color: blue;
+  min-height: 100vh;
 }
 
 .background-img-table {
   background: url(../../assets/images/card-border.jpg);
   /* Full height */
-  height: 100%;
-  min-height: 100vh;
+  max-height: 100vh;
 
   /* Center and scale the image nicely */
   background-position: center;
@@ -52,14 +52,15 @@ body {
 }
 
 .buyButt {
-  top: -10px;
-  font-size: 30px;
+  top: -82px;
+  font-size: 50px;
   padding: 20px 40px;
   border-radius: 20px;
   font-weight: bold;
   box-shadow: 1px 2px 2px 2px;
   position: absolute;
-  right: -93px;
+  right: 0%;
+  left: 80%;
 }
 
 .buyButt:hover {
@@ -127,6 +128,7 @@ body {
   border-radius: 25px;
   box-shadow: 1px 1px 5px 1px;
   z-index: 100;
+  min-width: 120px;
 }
 
 .chipCount {

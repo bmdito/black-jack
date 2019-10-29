@@ -446,10 +446,19 @@ class Table extends Component {
     var token = localStorage.getItem("x-auth-token");
     var decoded = decode(token);
     var id = decoded.user.id;
-    const finalChips = this.state.chipsAfterWithdrawal + this.state.chipStack;
+    const finalChips =
+      parseInt(this.state.chipsAfterWithdrawal) +
+      parseInt(this.state.chipStack);
+    console.log(finalChips);
     API.updatedChips({ id, finalChips }).then(res => {
       // updated info used here.
       console.log(res);
+    });
+    localStorage.removeItem("funds");
+    this.setState({
+      hideBetDiv: true,
+      isSit: false,
+      showStandUp: false
     });
   };
 
@@ -527,6 +536,10 @@ class Table extends Component {
       localStorage.getItem("funds") && this.state.isSit === false
         ? {}
         : { visibility: "hidden" };
+    const nameTag =
+      localStorage.getItem("funds") && this.state.isSit === true
+        ? {}
+        : { visibility: "hidden" };
 
     const toggleBuy = localStorage.getItem("funds")
       ? { visibility: "hidden" }
@@ -601,7 +614,7 @@ class Table extends Component {
                     </Button>
 
                     {/* Show information on Sitting Player */}
-                    <div className="playerInfo">
+                    <div className="playerInfo" style={nameTag}>
                       <div className="sitAvatar"></div>
                       <div className="playerName">
                         {this.state.currentPlayerName}
