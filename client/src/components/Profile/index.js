@@ -35,12 +35,43 @@ class Profile extends Component {
             <Col md={12}>
               <div className="profile-header">My Profile</div>
             </Col>
-            <Col md={{ span: 8, offset: 2 }}>
-              <div className="profile-content">
-                <div className="profile-item"></div>
-              </div>
-            </Col>
           </Row>
+          {this.state.profileInfo !== null &&
+          this.state.profileInfo !== undefined &&
+          this.state.profileInfo.length !== 0 ? (
+            <Row>
+              <Col md={{ span: 8, offset: 2 }}>
+                <div className="profile-content">
+                  <div className="profile-pic">
+                    <img src={this.state.profileInfo[0].avatar} />
+                  </div>
+
+                  <div className="profile-item-title">
+                    User Name:
+                    <span className="profile-item">
+                      {this.state.profileInfo[0].name}
+                    </span>
+                  </div>
+                  <div className="profile-item-title">
+                    Email Address:
+                    <span className="profile-item">
+                      {this.state.profileInfo[0].email}
+                    </span>
+                  </div>
+                  <div className="profile-item-title">
+                    Total Chips:
+                    <span className="profile-item">
+                      {this.state.profileInfo[0].chips}
+                    </span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          ) : (
+            <Fragment>
+              <h1>Loading</h1>
+            </Fragment>
+          )}
         </Container>
       </Fragment>
     );

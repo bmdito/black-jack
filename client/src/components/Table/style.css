@@ -2,6 +2,19 @@ body {
   background-color: blue;
 }
 
+.background-img-table {
+  background: url(../../assets/images/card-border.jpg);
+  /* Full height */
+  height: 100%;
+  min-height: 100vh;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
 .table-visual {
   background-color: rgb(48, 83, 76);
   height: 650px;
@@ -10,6 +23,7 @@ body {
   margin-top: 40px;
   width: 100%;
   position: relative;
+  border: 20px solid rgb(31, 85, 15);
 }
 
 .table-img {
@@ -97,18 +111,28 @@ body {
 
 .playerName {
   color: black;
-  position: absolute;
+  /* position: absolute;
   top: 170px;
-  left: -145px;
+  left: -145px; */
   font-size: 30px;
   font-weight: bolder;
 }
 
+.playerInfo {
+  position: absolute;
+  top: 170px;
+  left: -145px;
+  padding: 20px;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 1px 1px 5px 1px;
+  z-index: 100;
+}
+
 .chipCount {
   color: blue;
-  position: absolute;
-  top: 212px;
-  left: -90px;
+  /* position: absolute; */
+
   font-size: 20px;
   font-weight: bolder;
 }

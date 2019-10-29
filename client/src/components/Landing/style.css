@@ -12,10 +12,13 @@
 }
 
 .landing-main {
+  box-shadow: 1px 1px 7px 1px;
+  border-radius: 25px;
   z-index: 100;
-  color: white;
+  padding: 35px;
+  color: black;
+  background-color: white;
   font-weight: bolder;
-
   position: absolute;
   top: 40%;
   left: 3%;

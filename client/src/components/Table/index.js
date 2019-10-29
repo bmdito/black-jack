@@ -542,158 +542,160 @@ class Table extends Component {
 
     return (
       <>
-        <div className="container container-fluid">
-          <div className="row">
-            <div className="col-md-1"></div>
-            <div className="col-md-10">
-              <div className="table-visual">
-                <div>
-                  <img className="table-img" src={spades} />
-                </div>
-                <div className="dealerPos">
+        <div className="container-fluid">
+          <div className="background-img-table">
+            <div className="row">
+              <div className="col-md-1"></div>
+              <div className="col-md-10">
+                <div className="table-visual">
                   <div>
-                    {this.state.dealerHand.map((card, i) => {
-                      return <Card key={i} val={card.val} suit={card.suit} />;
-                    })}
+                    <img className="table-img" src={spades} />
                   </div>
-                </div>
-                <div className="posOne">
-                  <Button
-                    style={hitButtonAvail}
-                    bsclass="success"
-                    className="hit-button"
-                    onClick={this.playerHit}
-                  >
-                    Hit
-                  </Button>
-                  <Button
-                    style={hitButtonAvail}
-                    bsclass="success"
-                    className="stand-button"
-                    onClick={this.playerStand}
-                  >
-                    Stand
-                  </Button>
-                  <Button
-                    style={hitButtonAvail}
-                    bsclass="success"
-                    className="double-button"
-                    onClick={this.playerDouble}
-                  >
-                    Double
-                  </Button>
-                  <Button
-                    style={splitButtStyle}
-                    bsclass="success"
-                    className="split-button"
-                    onClick={this.playerSplit}
-                  >
-                    Split
-                  </Button>
-
-                  <Button
-                    style={standUpStyle}
-                    className="standUpButt"
-                    onClick={this.standUpFromTable}
-                  >
-                    StandUp
-                  </Button>
-
-                  {/* Show information on Sitting Player */}
-                  <div className="playerInfo">
-                    <div className="sitAvatar"></div>
-                    <div className="playerName">
-                      {this.state.currentPlayerName}
+                  <div className="dealerPos">
+                    <div>
+                      {this.state.dealerHand.map((card, i) => {
+                        return <Card key={i} val={card.val} suit={card.suit} />;
+                      })}
                     </div>
-                    <div className="chipCount">{this.state.chipStack}</div>
                   </div>
-                  <div>
-                    {this.state.playerHand.map((card, i) => {
-                      return <Card key={i} val={card.val} suit={card.suit} />;
-                    })}
-                  </div>
-                  <div className="betOne betDiv">betOne</div>
-                  {/* <Button bsclass="success" onClick={() => this.placeBet()}>
+                  <div className="posOne">
+                    <Button
+                      style={hitButtonAvail}
+                      bsclass="success"
+                      className="hit-button"
+                      onClick={this.playerHit}
+                    >
+                      Hit
+                    </Button>
+                    <Button
+                      style={hitButtonAvail}
+                      bsclass="success"
+                      className="stand-button"
+                      onClick={this.playerStand}
+                    >
+                      Stand
+                    </Button>
+                    <Button
+                      style={hitButtonAvail}
+                      bsclass="success"
+                      className="double-button"
+                      onClick={this.playerDouble}
+                    >
+                      Double
+                    </Button>
+                    <Button
+                      style={splitButtStyle}
+                      bsclass="success"
+                      className="split-button"
+                      onClick={this.playerSplit}
+                    >
+                      Split
+                    </Button>
+
+                    <Button
+                      style={standUpStyle}
+                      className="standUpButt"
+                      onClick={this.standUpFromTable}
+                    >
+                      StandUp
+                    </Button>
+
+                    {/* Show information on Sitting Player */}
+                    <div className="playerInfo">
+                      <div className="sitAvatar"></div>
+                      <div className="playerName">
+                        {this.state.currentPlayerName}
+                      </div>
+                      <div className="chipCount">{this.state.chipStack}</div>
+                    </div>
+                    <div>
+                      {this.state.playerHand.map((card, i) => {
+                        return <Card key={i} val={card.val} suit={card.suit} />;
+                      })}
+                    </div>
+                    <div className="betOne betDiv">betOne</div>
+                    {/* <Button bsclass="success" onClick={() => this.placeBet()}>
                     Place Bet
                   </Button> */}
-                  <div id="bet-div" style={betDivStyle}>
-                    <form>
-                      <input
-                        className="bet-input"
-                        type="text"
-                        name="currentBet"
-                        placeholder=""
-                        value={this.state.currentBet}
-                        onChange={this.handleInputChange}
-                        onSubmit={this.handleSubmit}
-                      />
-                      <button onClick={this.handleSubmit}>BET</button>
-                    </form>
+                    <div id="bet-div" style={betDivStyle}>
+                      <form>
+                        <input
+                          className="bet-input"
+                          type="text"
+                          name="currentBet"
+                          placeholder=""
+                          value={this.state.currentBet}
+                          onChange={this.handleInputChange}
+                          onSubmit={this.handleSubmit}
+                        />
+                        <button onClick={this.handleSubmit}>BET</button>
+                      </form>
+                    </div>
+                    {/* () => this.shuffle() */}
+                    <ModalProvider>
+                      <ModalRoot />
+                      <ModalConsumer>
+                        {({ showModal }) => (
+                          <Fragment>
+                            <button
+                              className="buyButt"
+                              style={toggleBuy}
+                              // style={}
+                              onClick={() => {
+                                showModal(widModal);
+                              }}
+                            >
+                              <span>Buy In</span>
+                            </button>
+                          </Fragment>
+                        )}
+                      </ModalConsumer>
+                    </ModalProvider>
+                    <div className="sitButt">
+                      <Button
+                        bsclass="success"
+                        style={toggleSit}
+                        onClick={this.takeSeat}
+                      >
+                        Take Seat!
+                      </Button>
+                    </div>
                   </div>
-                  {/* () => this.shuffle() */}
-                  <ModalProvider>
-                    <ModalRoot />
-                    <ModalConsumer>
-                      {({ showModal }) => (
-                        <Fragment>
-                          <button
-                            className="buyButt"
-                            style={toggleBuy}
-                            // style={}
-                            onClick={() => {
-                              showModal(widModal);
-                            }}
-                          >
-                            <span>Buy In</span>
-                          </button>
-                        </Fragment>
-                      )}
-                    </ModalConsumer>
-                  </ModalProvider>
-                  <div className="sitButt">
+                  <div className="posTwo" style={splitDivStyle}>
                     <Button
+                      style={secButtHide}
                       bsclass="success"
-                      style={toggleSit}
-                      onClick={this.takeSeat}
+                      className="hit-button"
+                      onClick={this.playerHit}
                     >
-                      Take Seat!
+                      Hit
                     </Button>
-                  </div>
-                </div>
-                <div className="posTwo" style={splitDivStyle}>
-                  <Button
-                    style={secButtHide}
-                    bsclass="success"
-                    className="hit-button"
-                    onClick={this.playerHit}
-                  >
-                    Hit
-                  </Button>
-                  <Button
-                    style={secButtHide}
-                    bsclass="success"
-                    className="stand-button"
-                    onClick={this.secPlayerStand}
-                  >
-                    Stand
-                  </Button>
-                  <Button
-                    style={secButtHide}
-                    bsclass="success"
-                    className="double-button"
-                    onClick={this.playerDouble}
-                  >
-                    Double
-                  </Button>
-                  <div>
-                    {this.state.secondPlayerHand.map((card, i) => {
-                      return <Card key={i} val={card.val} suit={card.suit} />;
-                    })}
+                    <Button
+                      style={secButtHide}
+                      bsclass="success"
+                      className="stand-button"
+                      onClick={this.secPlayerStand}
+                    >
+                      Stand
+                    </Button>
+                    <Button
+                      style={secButtHide}
+                      bsclass="success"
+                      className="double-button"
+                      onClick={this.playerDouble}
+                    >
+                      Double
+                    </Button>
+                    <div>
+                      {this.state.secondPlayerHand.map((card, i) => {
+                        return <Card key={i} val={card.val} suit={card.suit} />;
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="col-md-1"></div>
             </div>
-            <div className="col-md-1"></div>
           </div>
         </div>
       </>

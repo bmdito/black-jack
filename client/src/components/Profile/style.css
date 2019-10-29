@@ -4,6 +4,28 @@
 }
 
 .profile-content {
-  font-size: 15px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 9px 1px;
+  padding: 25px;
+  margin-top: 25px;
+}
+.profile-pic {
+  margin-top: 30px;
+}
+.profile-pic img {
+  height: 145px;
+  width: 120px;
+}
+
+.profile-item-title {
+  font-size: 22px;
   color: blue;
+  font-weight: bolder;
+  text-align: left;
+  margin: 25px;
+}
+.profile-item {
+  color: black;
+  font-size: 22px;
+  margin-left: 25px;
 }
