@@ -64,6 +64,12 @@ class Profile extends Component {
                       {this.state.profileInfo[0].chips}
                     </span>
                   </div>
+                  {/* <div className="profile-item-title">
+                    About Me:
+                    <span className="profile-item">
+                      {this.state.profileInfo[0].chips}
+                    </span>
+                  </div> */}
                 </div>
               </Col>
             </Row>

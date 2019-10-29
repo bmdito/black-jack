@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Button } from "react-bootstrap";
 import spades from "../../assets/images/ace-of-spades.jpg";
+import hiddenCard from "../../assets/images/card-back.png";
 import "./style.css";
 import Modal from "react-modal";
 import Withdrawal from "../Withdrawal/index";
@@ -25,6 +26,7 @@ class Table extends Component {
     currentShuffle: [],
     dealerHand: [],
     playerHand: [],
+    firstHandDealer: [],
     secondPlayerHand: [],
     dealerPoints: null,
     playerPoints: null,
@@ -42,6 +44,7 @@ class Table extends Component {
     dealerTurn: false,
     dealerStand: false,
     isSit: false,
+    isDealt: false,
     showStandUp: false
   };
 
@@ -156,16 +159,20 @@ class Table extends Component {
     console.log("... dealing cards");
     var playerDealt = [];
     var dealerDealt = [];
+    var firstDealer = [];
     var cards = this.state.currentShuffle;
     playerDealt.push(cards[0], cards[2]);
-    dealerDealt.push(cards[1], cards[3]);
+    dealerDealt.push(cards[1]);
+    firstDealer.push(cards[3]);
     var updated = cards.slice(4);
 
     this.setState({
       playerHand: playerDealt,
       dealerHand: dealerDealt,
+      firstHandDealer: firstDealer,
       currentShuffle: updated,
-      showStandUp: false
+      showStandUp: false,
+      isDealt: true
     });
 
     setTimeout(() => {
@@ -297,6 +304,12 @@ class Table extends Component {
     if (this.state.playerPoints > 21) {
       this.roundOver(this.state.playerPoints, this.state.dealerPoints);
     }
+    // console.log("dealer hand " + this.state.dealerHand[0]);
+    // console.log("dealer hand " + this.state.dealerHand[1]);
+    // console.log("player hand " + this.state.playerHand[0]);
+    // console.log("player hand " + this.state.playerHand[1]);
+    // console.log("current shuffle " + this.state.currentShuffle);
+    // console.log("first hand dealer " + this.state.firstHandDealer[0]);
   };
 
   //Check to see if there is an option to split
@@ -308,11 +321,6 @@ class Table extends Component {
         });
       }
     }
-
-    // if playerhand[0] && playerhand[1] are the same, option to split Appears
-    // if chosen amount same as bet in play goes to split div
-    // slice occurs and moves card over
-    //Account for new player added <playerAdded bolean in state?>
   };
 
   // draw a card
@@ -390,8 +398,13 @@ class Table extends Component {
 
   playerStand = () => {
     console.log("player Stood!");
+    let newDealer = [];
+    newDealer.push(this.state.dealerHand);
+    newDealer.push(this.state.firstHandDealer);
     this.setState({
-      firstDeal: true
+      firstDeal: true,
+      dealerHand: newDealer,
+      dealerTurn: true
     });
 
     this.dealerTurn();
@@ -507,6 +520,7 @@ class Table extends Component {
         firstDeal: true,
         dealerTurn: false,
         dealerStand: false,
+        isDealt: false,
         showStandUp: true
       });
     }
@@ -552,7 +566,10 @@ class Table extends Component {
     const secButtHide = this.state.secHandStand ? { visibility: "hidden" } : {};
     const hitButtonAvail = this.state.firstDeal ? { visibility: "hidden" } : {};
     const standUpStyle = this.state.showStandUp ? {} : { visibility: "hidden" };
-
+    const thatHiddenCard =
+      this.state.dealerTurn || this.state.isDealt === false
+        ? { visibility: "hidden" }
+        : {};
     return (
       <>
         <div className="container-fluid">
@@ -569,6 +586,10 @@ class Table extends Component {
                       {this.state.dealerHand.map((card, i) => {
                         return <Card key={i} val={card.val} suit={card.suit} />;
                       })}
+                    </div>
+
+                    <div className="hideCard" style={thatHiddenCard}>
+                      <img src={hiddenCard} />
                     </div>
                   </div>
                   <div className="posOne">
@@ -724,6 +745,14 @@ const Card = ({ val, suit }) => {
     <td>
       <div className={color}>{combo}</div>
     </td>
+  );
+};
+
+const theHiddenCard = () => {
+  return (
+    <div className="hideCard">
+      <img src={hiddenCard} />
+    </div>
   );
 };
 
