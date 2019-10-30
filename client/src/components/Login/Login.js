@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import "./style.css";
 import API from "../../utils/API";
+import spades from "../../assets/images/ace-of-spades.jpg";
 
 class Login extends Component {
   state = {
@@ -74,6 +75,7 @@ class Login extends Component {
   render() {
     return (
       <Fragment>
+        <img className="spade-logo" src={spades} />
         <h1>Sign in</h1>
         <h3>Log in to your account</h3>
         <form className="form">

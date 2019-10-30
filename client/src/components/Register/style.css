@@ -8,7 +8,7 @@
 
 .form .form-text {
   display: block;
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
   color: #888;
 }
 
@@ -42,4 +42,10 @@
   font-size: 14px;
   color: red;
   font-style: italic;
+}
+
+.spade-logo {
+  height: 40px;
+  width: 40px;
+  border-radius: 25px;
 }
