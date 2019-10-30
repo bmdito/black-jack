@@ -77,7 +77,7 @@ class Login extends Component {
       <Fragment>
         <img className="spade-logo" src={spades} />
         <h1>Sign in</h1>
-        <h3>Log in to your account</h3>
+        <h3 className="indicator">Log in to your account</h3>
         <form className="form">
           <div className="form-group">
             <div className="error-style">{this.state.emailError}</div>

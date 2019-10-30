@@ -149,7 +149,7 @@ class Table extends Component {
       }
     }
     this.setState({
-      currentShuffle: shuffled
+      currentShuffle: sample
     });
     // console.log(shuffled);
   };
@@ -481,8 +481,20 @@ class Table extends Component {
 
   playerWin = () => {
     alert("player Win ran");
-
-    var updated = this.state.betInPlay * 2 + this.state.chipStack;
+    let updated = 0;
+    let playerTwo = this.state.secPlayerPoints;
+    let dealer = this.state.dealerPoints;
+    let selected = this.state.splitSelected;
+    if (selected && playerTwo > dealer) {
+      updated = this.state.betInPlay * 2 + this.state.chipStack;
+    } else if (selected && playerTwo < dealer) {
+      updated = parseInt(this.state.betInPlay) + parseInt(this.state.chipStack);
+    } else if (selected && playerTwo === dealer) {
+      updated = this.state.betInPlay * 1.5;
+    }
+    if (!selected) {
+      updated = this.state.betInPlay * 2 + this.state.chipStack;
+    }
 
     this.setState({
       chipStack: updated
@@ -492,6 +504,25 @@ class Table extends Component {
 
   playerLose = () => {
     alert("player Lose ran");
+    if (
+      this.state.splitSelected &&
+      this.state.secPlayerPoints > this.state.dealerPoints
+    ) {
+      let updated =
+        parseInt(this.state.betInPlay) + parseInt(this.state.chipStack);
+      this.setState({
+        chipStack: updated
+      });
+    } else if (
+      this.state.splitSelected &&
+      this.state.secPlayerPoints === this.state.dealerPoints
+    ) {
+      let updated =
+        parseInt(this.state.betInPlay) / 2 + parseInt(this.state.chipStack);
+      this.setState({
+        chipStack: updated
+      });
+    }
     this.resetGame();
   };
 
@@ -738,6 +769,15 @@ class Table extends Component {
                       {this.state.secondPlayerHand.map((card, i) => {
                         return <Card key={i} val={card.val} suit={card.suit} />;
                       })}
+                    </div>
+                    <div className="betTwo betDiv">
+                      {this.state.splitSelected ? (
+                        <div className="bet-spot">
+                          <img src={chips} />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </div>
                 </div>

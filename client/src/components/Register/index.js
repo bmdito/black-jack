@@ -94,7 +94,7 @@ class Register extends Component {
         <img className="spade-logo" src={spades} />
 
         <h1>Sign Up</h1>
-        <h3>Create your account</h3>
+        <h3 className="indicator">Create your account</h3>
         <form className="form">
           <div className="form-group">
             <div className="error-style">{this.state.nameError}</div>
