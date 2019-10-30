@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Button } from "react-bootstrap";
 import spades from "../../assets/images/ace-of-spades.jpg";
 import hiddenCard from "../../assets/images/card-back.png";
+import chips from "../../assets/images/pokerchips.png";
 import "./style.css";
 import Modal from "react-modal";
 import Withdrawal from "../Withdrawal/index";
@@ -150,7 +151,7 @@ class Table extends Component {
     this.setState({
       currentShuffle: shuffled
     });
-    console.log(shuffled);
+    // console.log(shuffled);
   };
 
   //Initial Deal
@@ -192,8 +193,6 @@ class Table extends Component {
 
   //checkScore
   scoreCheck = () => {
-    alert("you clicked score check");
-
     this.splitCheck();
     let sampDealerHand = [...this.state.dealerHand];
     console.log(sampDealerHand);
@@ -399,15 +398,17 @@ class Table extends Component {
   playerStand = () => {
     console.log("player Stood!");
     let newDealer = [];
-    newDealer.push(this.state.dealerHand);
-    newDealer.push(this.state.firstHandDealer);
+    newDealer.push(this.state.dealerHand[0]);
+    newDealer.push(this.state.firstHandDealer[0]);
     this.setState({
       firstDeal: true,
       dealerHand: newDealer,
       dealerTurn: true
     });
 
-    this.dealerTurn();
+    setTimeout(() => {
+      this.dealerTurn();
+    }, 1500);
   };
 
   secPlayerStand = () => {
@@ -425,11 +426,13 @@ class Table extends Component {
     let doubled = this.state.currentBet * 2;
     let adjusted = this.state.chipStack - this.state.betInPlay;
     this.playerHit();
+
     this.setState({
       betInPlay: doubled,
       chipStack: adjusted,
       firstDeal: true
     });
+    this.scoreCheck();
     setTimeout(() => {
       this.playerStand();
     }, 1500);
@@ -493,7 +496,8 @@ class Table extends Component {
 
   playerPush = () => {
     alert("player push ran");
-    var updated = this.state.betInPlay + this.state.chipStack;
+    var updated =
+      parseInt(this.state.betInPlay) + parseInt(this.state.chipStack);
     this.setState({
       chipStack: updated
     });
@@ -527,6 +531,7 @@ class Table extends Component {
   };
 
   roundOver = () => {
+    console.log("rounderOver Ran");
     if (this.state.playerPoints > 21) {
       alert("You Lost");
       this.playerLose();
@@ -647,7 +652,15 @@ class Table extends Component {
                         return <Card key={i} val={card.val} suit={card.suit} />;
                       })}
                     </div>
-                    <div className="betOne betDiv">betOne</div>
+                    <div className="betOne betDiv">
+                      {this.state.betInPlay > 0 ? (
+                        <div className="bet-spot">
+                          <img src={chips} />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                     {/* <Button bsclass="success" onClick={() => this.placeBet()}>
                     Place Bet
                   </Button> */}

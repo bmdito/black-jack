@@ -7,7 +7,8 @@ import "./style.css";
 class Withdrawal extends Component {
   state = {
     userInfo: null,
-    withdrawal: null
+    withdrawal: null,
+    error: ""
   };
 
   checkChips = id => {
@@ -42,18 +43,33 @@ class Withdrawal extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("you submitted");
-    let final = this.state.withdrawal;
-    let theName = this.state.userInfo[0].name;
-    let diff = this.state.userInfo[0].chips - final;
-    localStorage.setItem("name", theName);
-    localStorage.setItem("funds", final);
-    localStorage.setItem("diff", diff);
-    window.location.reload();
+    let isValid = this.validate();
+    if (isValid) {
+      console.log("you submitted");
+      let final = this.state.withdrawal;
+      let theName = this.state.userInfo[0].name;
+      let diff = this.state.userInfo[0].chips - final;
+      localStorage.setItem("name", theName);
+      localStorage.setItem("funds", final);
+      localStorage.setItem("diff", diff);
+      window.location.reload();
+    } else {
+    }
   };
 
   validate = () => {
     let withdrawalError = "";
+    if (this.state.withdrawal > this.state.userInfo[0].chips) {
+      withdrawalError = "Withdrawal amount exceeds Funds!!";
+    }
+
+    if (withdrawalError) {
+      this.setState({
+        error: withdrawalError
+      });
+      return false;
+    }
+    return true;
   };
 
   render() {
@@ -61,7 +77,6 @@ class Withdrawal extends Component {
       <Fragment>
         <form className="form">
           <div className="form-group">
-            {/* <div className="error-style">{this.state.emailError}</div> */}
             <h2 className="withdraw-title">Choose Withdrawal Amount</h2>
             {this.state.userInfo !== null &&
             this.state.userInfo !== undefined &&
@@ -73,6 +88,7 @@ class Withdrawal extends Component {
                     {this.state.userInfo[0].chips}
                   </span>
                 </h2>
+                <div className="error-style">{this.state.error}</div>
               </>
             ) : (
               <>
