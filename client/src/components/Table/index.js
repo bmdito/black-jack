@@ -372,6 +372,7 @@ class Table extends Component {
   };
 
   dealerTurn = () => {
+    this.scoreCheck();
     console.log("its the dealers turn");
     // console.log("variable d: " + d);
     if (this.state.dealerPoints < 17) {
