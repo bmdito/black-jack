@@ -528,11 +528,23 @@ class Table extends Component {
 
   playerPush = () => {
     alert("player push ran");
-    var updated =
-      parseInt(this.state.betInPlay) + parseInt(this.state.chipStack);
-    this.setState({
-      chipStack: updated
-    });
+    if (
+      this.state.splitSelected &&
+      this.state.secPlayerPoints > this.state.dealerPoints
+    ) {
+      let updated =
+        parseInt(this.state.betInPlay) * 1.5 + parseInt(this.state.chipStack);
+      this.setState({
+        chipStack: updated
+      });
+    } else {
+      var updated =
+        parseInt(this.state.betInPlay) + parseInt(this.state.chipStack);
+      this.setState({
+        chipStack: updated
+      });
+    }
+    // need to check all push scenarios
     this.resetGame();
   };
 
