@@ -19,8 +19,15 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/availchips", require("./routes/api/availchips"));
 app.use("/api/updatedChips", require("./routes/api/updatedChips"));
 
-app.get("/", (req, res) => res.send("API Running"));
+// app.get("/", (req, res) => res.send("API Running"));
 
 const PORT = process.env.PORT || 5000;
+
+if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+    app.use("*", express.static("client/build")); // Added this
+  }
+}
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
