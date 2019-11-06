@@ -149,7 +149,7 @@ class Table extends Component {
       }
     }
     this.setState({
-      currentShuffle: sample
+      currentShuffle: shuffled
     });
     // console.log(shuffled);
   };
