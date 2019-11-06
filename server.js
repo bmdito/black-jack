@@ -12,7 +12,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 // Make public a static folder
-app.use(express.static("public"));
+// app.use(express.static("public"));
 //Define Routes
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
