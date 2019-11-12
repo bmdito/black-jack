@@ -22,7 +22,7 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/availchips", require("./routes/api/availchips"));
 app.use("/api/updatedChips", require("./routes/api/updatedChips"));
 
-// app.get("/", (req, res) => res.send("API Running"));
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 // app.get("*", (req, res) => {
