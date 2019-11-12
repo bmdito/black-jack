@@ -8,9 +8,23 @@ Register for an account or login to website to gain access to Table and My Profi
 ![register](https://user-images.githubusercontent.com/44068902/68705525-13b81400-0543-11ea-8709-2be224ace5ab.gif)
 
 
-Play blackjack against the dealer includes splits & double downs
+
+
+
+Withdrawal chips from account, take your seat, and play blackjack against the dealer ! includes splits & double downs
+
+
+
+
 
 ![play](https://user-images.githubusercontent.com/44068902/68709929-7f9e7a80-054b-11ea-9355-6cb2c00bba5a.gif)
+
+
+
+
+
+
+
 
 
 #Get started with BlackJack
