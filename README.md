@@ -2,8 +2,9 @@
 Black jack app is a mini casino where users can join a table and play black jack. The either registers for a new account or logs in, and gains access to table & my profile tabs.
 App makes use of front & back end validation & authenticated routes.
 
-#Features
+Features
 Register for an account or login to website to gain access to Table and My Profile Tabs
+![register](https://user-images.githubusercontent.com/44068902/68705525-13b81400-0543-11ea-8709-2be224ace5ab.gif)
 
 
 Play blackjack against the dealer includes splits & double downs
