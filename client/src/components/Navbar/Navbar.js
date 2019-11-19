@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import Modal from "react-modal";
 import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
@@ -8,6 +8,9 @@ import Login from "../Login/Login";
 import Logout from "../Logout/Logout";
 import decode from "jwt-decode";
 import { Link } from "react-router-dom";
+import spades from "../../assets/images/ace-of-spades.jpg";
+
+// import Navbar from "react-bootstrap";
 import "./Navbar.css";
 
 const Modal1 = ({ onRequestClose, ...otherProps }) => (
@@ -42,93 +45,129 @@ const checkAuth = () => {
   return true;
 };
 
-function Navbar() {
-  return (
-    <>
-      <div className="container-fullwidth">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" href="#">
-            <span className="brandy">Hot Aces</span>
-          </a>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {checkAuth() ? (
-              <>
-                <div className="ml-auto">
-                  <Link to="/profile">
-                    <button className="logButt" color="inherit">
+const navStyle = {
+  borderBottom: "4px solid black"
+};
+
+class Navbar extends Component {
+  componentDidMount() {
+    window.addEventListener("scroll", () => {
+      const isTop = window.scrollY > 100;
+      const getNav = document.getElementById("navy");
+      if (isTop) {
+        getNav.classList.add("scrolled");
+        console.log("Scroll add triggered");
+      } else {
+        getNav.classList.remove("scrolled");
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll");
+  }
+
+  render() {
+    return (
+      <>
+        <div className="container-fullwidth">
+          <div id="navy" className="">
+            <nav
+              // style={navStyle}
+
+              className="navbar navbar-expand-lg navbar-light bg-light"
+            >
+              <a className="navbar-brand" href="#">
+                <img className="spade-logo" src={spades} />
+              </a>
+              <div
+                className="collapse navbar-collapse"
+                id="navbarSupportedContent"
+              >
+                {checkAuth() ? (
+                  <>
+                    <div className="ml-auto">
+                      <Link to="/profile">
+                        <button className="logButt" color="inherit">
+                          <span className="navFont">My Profile</span>
+                        </button>
+                      </Link>
+                      <Link to="/table">
+                        <button
+                          type="button"
+                          className="logButt"
+                          color="inherit"
+                        >
+                          <span className="navFont">Join Table</span>
+                        </button>
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* My Profile  */}
+                    <button className="logButt navHide" color="inherit">
                       <span className="navFont">My Profile</span>
                     </button>
-                  </Link>
-                  <Link to="/table">
-                    <button type="button" className="logButt" color="inherit">
+                    {/* Join Table Button */}
+                    <button
+                      className="logButt navHide"
+                      href="/table"
+                      color="inherit"
+                    >
                       <span className="navFont">Join Table</span>
                     </button>
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <>
-                {/* My Profile  */}
-                <button className="logButt navHide" color="inherit">
-                  <span className="navFont">My Profile</span>
-                </button>
-                {/* Join Table Button */}
-                <button
-                  className="logButt navHide"
-                  href="/table"
-                  color="inherit"
-                >
-                  <span className="navFont">Join Table</span>
-                </button>
-              </>
-            )}
-            {checkAuth() ? (
-              <Logout />
-            ) : (
-              <>
-                <div className="ml-auto">
-                  <ModalProvider>
-                    <ModalRoot />
-                    <ModalConsumer>
-                      {({ showModal }) => (
-                        <Fragment>
-                          <button
-                            className="logButt"
-                            onClick={() => showModal(Modal1)}
-                          >
-                            <span className="navFont">Login</span>
-                          </button>
-                          <button
-                            className="logButt"
-                            onClick={() => showModal(Modal2)}
-                          >
-                            <span className="navFont">Register</span>
-                          </button>
-                        </Fragment>
-                      )}
-                    </ModalConsumer>
-                  </ModalProvider>
-                </div>
-              </>
-            )}
-            {/* <ul className="navbar-nav ml-auto">
+                  </>
+                )}
+                {checkAuth() ? (
+                  <Logout />
+                ) : (
+                  <>
+                    <div className="ml-auto">
+                      <ModalProvider>
+                        <ModalRoot />
+                        <ModalConsumer>
+                          {({ showModal }) => (
+                            <Fragment>
+                              <button
+                                className="logButt"
+                                onClick={() => showModal(Modal1)}
+                              >
+                                <span className="navFont">Login</span>
+                              </button>
+                              <button
+                                className="logButt"
+                                onClick={() => showModal(Modal2)}
+                              >
+                                <span className="navFont">Register</span>
+                              </button>
+                            </Fragment>
+                          )}
+                        </ModalConsumer>
+                      </ModalProvider>
+                    </div>
+                  </>
+                )}
+                {/* <ul className="navbar-nav ml-auto">
 
-              <li className="nav-item">
-                <a className="nav-link" href="/Login">
-                  Log In
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/Register">
-                  Register
-                </a>
-              </li>
-            </ul> */}
+                <li className="nav-item">
+                  <a className="nav-link" href="/Login">
+                    Log In
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/Register">
+                    Register
+                  </a>
+                </li>
+              </ul> */}
+              </div>
+            </nav>
           </div>
-        </nav>
-      </div>
-    </>
-  );
+        </div>
+      </>
+    );
+  }
 }
 
 export default Navbar;

@@ -91,7 +91,7 @@ class Register extends Component {
   render() {
     return (
       <Fragment>
-        <img className="spade-logo" src={spades} />
+        <img className="spade-logo" src={spades} alt="logo" />
 
         <h1>Sign Up</h1>
         <h3 className="indicator">Create your account</h3>
