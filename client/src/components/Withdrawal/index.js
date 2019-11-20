@@ -59,8 +59,13 @@ class Withdrawal extends Component {
 
   validate = () => {
     let withdrawalError = "";
+    let sample = parseInt(this.state.withdrawal);
     if (this.state.withdrawal > this.state.userInfo[0].chips) {
       withdrawalError = "Withdrawal amount exceeds Funds!!";
+    }
+
+    if (!Number.isInteger(sample)) {
+      withdrawalError = "choose a valid withdrawal amount!";
     }
 
     if (withdrawalError) {
