@@ -71,7 +71,7 @@ class Thenavbar extends Component {
     return (
       <>
         {/* <div className="container-fullwidth"> */}
-        <Navbar bg="light" expand="lg">
+        <Navbar sticky="top" style={navStyle} bg="light" expand="lg">
           <Navbar.Brand href="#">
             <img className="spade-logo" src={spades} />
           </Navbar.Brand>
