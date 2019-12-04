@@ -1,5 +1,4 @@
 body {
-
   min-height: 100vh;
 }
 
@@ -196,4 +195,70 @@ body {
 .bet-spot img {
   height: 50px;
   width: 50px;
+}
+
+@media only screen and (max-width: 480px) {
+  .buyButt {
+    left: 18%;
+    font-size: 30px;
+    top: 46%;
+  }
+  .table-visual {
+    height: 361px;
+    margin-top: 98px;
+    padding-bottom: 40px;
+    margin-bottom: 127px;
+  }
+  .sitButt {
+    margin-top: 155px;
+    margin-right: 244px;
+  }
+  .playerInfo {
+    top: 121px;
+    left: -44px;
+  }
+  #bet-div {
+    position: absolute;
+    top: 0px;
+  }
+  .card,
+  .hideCard img,
+  .card-red {
+    height: 60px !important;
+    width: 40px !important;
+  }
+
+  .hideCard img {
+    left: 47px;
+  }
+  .hit-button {
+    width: 45px;
+    left: -17px;
+  }
+  .stand-button {
+    width: 63px;
+    left: 41px;
+  }
+  .double-button {
+    width: 67px;
+    left: 116px;
+  }
+
+  .posOne {
+    position: absolute;
+    left: 5%;
+    bottom: -8px;
+    width: 201px;
+    height: 122px;
+  }
+  .bet-spot img {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    left: -40px;
+  }
+  .standUpButt {
+    top: 73px;
+    left: 23px;
+  }
 }
