@@ -261,4 +261,8 @@ body {
     top: 73px;
     left: 23px;
   }
+  .dealerPos {
+    width: 265px;
+    height: 80px;
+  }
 }
