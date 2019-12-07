@@ -75,7 +75,7 @@ class Login extends Component {
   render() {
     return (
       <Fragment>
-        <img className="spade-logo" src={spades} />
+        <img className="spade-logo" src={spades} alt="logo" />
         <h1>Sign in</h1>
         <h3 className="indicator">Log in to your account</h3>
         <form className="form">

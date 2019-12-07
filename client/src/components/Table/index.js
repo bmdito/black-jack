@@ -628,7 +628,7 @@ class Table extends Component {
               <div className="col-md-10">
                 <div className="table-visual">
                   <div>
-                    <img className="table-img" src={spades} />
+                    <img className="table-img" alt="logo" src={spades} />
                   </div>
                   <div className="dealerPos">
                     <div>
@@ -638,7 +638,7 @@ class Table extends Component {
                     </div>
 
                     <div className="hideCard" style={thatHiddenCard}>
-                      <img src={hiddenCard} />
+                      <img alt="logo" src={hiddenCard} />
                     </div>
                   </div>
                   <div className="posOne">
@@ -699,7 +699,7 @@ class Table extends Component {
                     <div className="betOne betDiv">
                       {this.state.betInPlay > 0 ? (
                         <div className="bet-spot">
-                          <img src={chips} />
+                          <img alt="chips" src={chips} />
                         </div>
                       ) : (
                         <></>
@@ -785,7 +785,7 @@ class Table extends Component {
                     <div className="betTwo betDiv">
                       {this.state.splitSelected ? (
                         <div className="bet-spot">
-                          <img src={chips} />
+                          <img alt="chips" src={chips} />
                         </div>
                       ) : (
                         <></>
@@ -811,14 +811,6 @@ const Card = ({ val, suit }) => {
     <td>
       <div className={color}>{combo}</div>
     </td>
-  );
-};
-
-const theHiddenCard = () => {
-  return (
-    <div className="hideCard">
-      <img src={hiddenCard} />
-    </div>
   );
 };
 

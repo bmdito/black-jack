@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { render } from "react-dom";
 import Modal from "react-modal";
 import { ModalProvider, ModalConsumer } from "../LoginModal/ModalContext";
 import ModalRoot from "../LoginModal/ModalRoot";
@@ -73,7 +72,7 @@ class Thenavbar extends Component {
         {/* <div className="container-fullwidth"> */}
         <Navbar sticky="top" style={navStyle} bg="light" expand="lg">
           <Navbar.Brand href="#">
-            <img className="spade-logo" src={spades} />
+            <img className="spade-logo" src={spades} alt="logo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -7,12 +7,10 @@ import {
   Redirect
 } from "react-router-dom";
 import Landing from "./components/Landing/landing";
-import Register from "./components/Register/index";
 import Navbar from "./components/Navbar/Navbar";
 import Table from "./components/Table/index";
 import Profile from "./components/Profile/index";
 
-import { Button } from "react-bootstrap";
 import decode from "jwt-decode";
 
 import "./App.css";

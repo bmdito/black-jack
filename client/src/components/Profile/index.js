@@ -43,7 +43,7 @@ class Profile extends Component {
               <Col md={{ span: 8, offset: 2 }}>
                 <div className="profile-content">
                   <div className="profile-pic">
-                    <img src={this.state.profileInfo[0].avatar} />
+                    <img src={this.state.profileInfo[0].avatar} alt="user" />
                   </div>
 
                   <div className="profile-item-title">
