@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import spades from "../../assets/images/ace-of-spades.jpg";
 import { Nav, Navbar } from "react-bootstrap";
 // import Navbar from "react-bootstrap";
+
 import "./Navbar.css";
 
 const Modal1 = ({ onRequestClose, ...otherProps }) => (
@@ -70,7 +71,7 @@ class Thenavbar extends Component {
     return (
       <>
         {/* <div className="container-fullwidth"> */}
-        <Navbar sticky="top" style={navStyle} bg="light" expand="lg">
+        <Navbar sticky="top" bg="light" expand="lg">
           <Navbar.Brand href="#">
             <img className="spade-logo" src={spades} alt="logo" />
           </Navbar.Brand>

@@ -6,11 +6,12 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+
 import Landing from "./components/Landing/landing";
-import Navbar from "./components/Navbar/Navbar";
+import Thenavbar from "./components/Navbar/Navbar";
 import Table from "./components/Table/index";
 import Profile from "./components/Profile/index";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import decode from "jwt-decode";
 
 import "./App.css";
@@ -50,7 +51,7 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Thenavbar />
       <Fragment>
         <section className="App">
           <Switch>
